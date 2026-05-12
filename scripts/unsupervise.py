@@ -29,6 +29,7 @@ from sklearn.ensemble import IsolationForest
 
 warnings.filterwarnings("ignore")
 matplotlib.rcParams["font.family"] = "sans-serif"
+matplotlib.rcParams["font.sans-serif"] = ["Tahoma", "Leelawadee UI", "Arial"]
 matplotlib.rcParams["axes.unicode_minus"] = False
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
