@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}Unsupervised Learning{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <canvas id="heroCanvas"></canvas>
+    <div class="hero-orb o1" style="background:#00cec9"></div>
+    <div class="hero-orb o2" style="background:#667eea"></div>
+    <div class="hero-orb o3" style="background:#6c5ce7"></div>
+    <div class="hero-content">
+        <div class="hero-badge">
+            <span class="dot" style="background:#00cec9;box-shadow:0 0 8px #00cec9"></span>
+            Unsupervised Learning · K-Means Clustering
+        </div>
+        <h1>Customer <span>Segment</span><br>Analysis</h1>
+        <p class="tagline">จัดกลุ่มลูกค้าด้วย K-Means Clustering (k=3) และลดมิติข้อมูลด้วย PCA เพื่อค้นหารูปแบบพฤติกรรมที่ซ่อนอยู่</p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <span class="hs-icon">🧩</span>
+                <div>
+                    <div class="hs-val">3</div>
+                    <div class="hs-lbl">กลุ่ม Cluster</div>
+                </div>
+            </div>
+            <div class="hero-stat">
+                <span class="hs-icon">📋</span>
+                <div>
+                    <div class="hs-val"><span class="count-up" data-target="{{ personas|sum(attribute='size') }}">0</span></div>
+                    <div class="hs-lbl">ผู้ตอบทั้งหมด</div>
+                </div>
+            </div>
+            <div class="hero-stat">
+                <span class="hs-icon">🔬</span>
+                <div>
+                    <div class="hs-val" style="font-size:.95rem">K-Means + PCA</div>
+                    <div class="hs-lbl">เทคนิคที่ใช้</div>
+                </div>
+            </div>
+            <div class="hero-stat">
+                <span class="hs-icon">📊</span>
+                <div>
+                    <div class="hs-val">2</div>
+                    <div class="hs-lbl">มิติ PCA</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- KPI Cards -->
+<div class="cards">
+    {% for p in personas %}
+    <div class="card">
+        <div class="icon icon-{{ ['blue','green','orange'][p.cluster_id] }}"><i class="fas fa-users"></i></div>
+        <div class="label">Cluster {{ p.cluster_id }}</div>
+        <div class="value">{{ p.size }}</div>
+        <div class="sub">{{ p.pct }}% — {{ p.engagement }}</div>
+    </div>
+    {% endfor %}
+    <div class="card">
+        <div class="icon icon-purple"><i class="fas fa-cogs"></i></div>
+        <div class="label">เทคนิคที่ใช้</div>
+        <div class="value" style="font-size:1rem">K-Means + PCA</div>
+        <div class="sub">2 วิธีการเรียนรู้แบบไม่มีผู้สอน</div>
+    </div>
+</div>
+
+<!-- Customer Personas -->
+<h2 class="section-title">Customer Personas</h2>
+{% for p in personas %}
+<div class="persona-card">
+    <h3>
+        <span class="tag tag-{{ p.cluster_id }}">Cluster {{ p.cluster_id }}</span>
+        {{ p.name }}
+    </h3>
+    <p style="color:#8892b0;font-size:.82rem;margin:8px 0">{{ p.description }}</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px">
+        <div><span style="color:#636e88;font-size:.72rem">ปัจจัยหลัก</span><br><strong style="color:#fff">{{ p.top_factor }}</strong></div>
+        <div><span style="color:#636e88;font-size:.72rem">บรรจุภัณฑ์ที่ชื่นชอบ</span><br><strong style="color:#fff">{{ p.top_pkg }}</strong></div>
+        <div><span style="color:#636e88;font-size:.72rem">ดีไซน์ที่ต้องการ</span><br><strong style="color:#fff">{{ p.top_option }}</strong></div>
+        <div><span style="color:#636e88;font-size:.72rem">ข้อมูลประชากร</span><br><strong style="color:#fff">{{ p.age }}, {{ p.gender }}</strong></div>
+        <div><span style="color:#636e88;font-size:.72rem">คะแนนปัจจัยเฉลี่ย</span><br><strong style="color:#fff">{{ p.avg_factor }}</strong></div>
+        <div><span style="color:#636e88;font-size:.72rem">คะแนนบรรจุภัณฑ์เฉลี่ย</span><br><strong style="color:#fff">{{ p.avg_pkg }}</strong></div>
+    </div>
+</div>
+{% endfor %}
+
+<!-- Charts -->
+<h2 class="section-title">Visualizations</h2>
+<div class="grid-2">
+    {% for c in charts %}
+    <div class="box">
+        <h3>{{ c.title }}</h3>
+        <p class="desc">{{ c.desc }}</p>
+        <img src="/output/{{ c.file }}" alt="{{ c.title }}" loading="lazy">
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
