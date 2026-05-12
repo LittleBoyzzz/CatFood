@@ -4,29 +4,30 @@
 <style>
 /* ── Prediction Panel ── */
 .predict-panel {
-    background: linear-gradient(145deg, #12122a, #1a1a35);
-    border: 1px solid rgba(102,126,234,.25);
+    background: #fff;
+    border: 1px solid rgba(160,120,90,.15);
     border-radius: 20px;
     padding: 32px;
     margin-bottom: 32px;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 2px 12px rgba(160,120,90,.06);
 }
 .predict-panel::before {
     content: '';
     position: absolute;
     top: -60px; right: -60px;
     width: 220px; height: 220px;
-    background: radial-gradient(circle, rgba(102,126,234,.18) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(196,149,106,.15) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
 }
 .predict-panel h2 {
-    font-size: 1.15rem; font-weight: 700; color: #fff;
+    font-size: 1.15rem; font-weight: 700; color: #4E342E;
     margin-bottom: 6px; display: flex; align-items: center; gap: 10px;
 }
 .predict-panel .sub-desc {
-    font-size: .78rem; color: #636e88; margin-bottom: 28px;
+    font-size: .78rem; color: #A1887F; margin-bottom: 28px;
 }
 .predict-groups {
     display: grid;
@@ -35,15 +36,15 @@
     margin-bottom: 28px;
 }
 .predict-group {
-    background: rgba(255,255,255,.03);
-    border: 1px solid rgba(255,255,255,.07);
+    background: rgba(196,149,106,.04);
+    border: 1px solid rgba(160,120,90,.1);
     border-radius: 14px;
     padding: 20px;
 }
 .predict-group h4 {
-    font-size: .8rem; font-weight: 700; color: #a5b4fc;
+    font-size: .8rem; font-weight: 700; color: #A0785A;
     text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;
-    padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,.06);
+    padding-bottom: 8px; border-bottom: 1px solid rgba(160,120,90,.1);
 }
 .slider-row {
     display: flex; align-items: center;
@@ -51,42 +52,42 @@
     margin-bottom: 14px;
 }
 .slider-row label {
-    font-size: .78rem; color: #ccd6f6; min-width: 160px; flex-shrink: 0;
+    font-size: .78rem; color: #5D4037; min-width: 160px; flex-shrink: 0;
 }
 .slider-row input[type=range] {
-    flex: 1; accent-color: #667eea; cursor: pointer; height: 4px;
+    flex: 1; accent-color: #C4956A; cursor: pointer; height: 4px;
 }
 .slider-val {
     min-width: 24px; text-align: right;
-    font-size: .85rem; font-weight: 700; color: #667eea;
+    font-size: .85rem; font-weight: 700; color: #A0785A;
 }
 .demo-row {
     display: flex; flex-direction: column; gap: 12px;
 }
 .demo-row label {
-    font-size: .78rem; color: #8892b0; margin-bottom: 2px;
+    font-size: .78rem; color: #8D6E63; margin-bottom: 2px;
 }
 .demo-row select {
-    background: rgba(255,255,255,.06);
-    border: 1px solid rgba(255,255,255,.12);
-    border-radius: 8px; color: #fff; padding: 8px 12px;
+    background: rgba(196,149,106,.06);
+    border: 1px solid rgba(160,120,90,.15);
+    border-radius: 8px; color: #4E342E; padding: 8px 12px;
     font-size: .82rem; font-family: inherit; cursor: pointer;
     outline: none; width: 100%;
 }
-.demo-row select option { background: #1a1a35; color: #fff; }
+.demo-row select option { background: #fff; color: #4E342E; }
 
 /* Predict Button */
 .predict-btn {
     display: inline-flex; align-items: center; gap: 10px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #C4956A, #A0785A);
     color: #fff; border: none; border-radius: 12px;
     padding: 14px 36px; font-size: 1rem; font-weight: 700;
     cursor: pointer; transition: all .25s; letter-spacing: .3px;
-    box-shadow: 0 4px 20px rgba(102,126,234,.35);
+    box-shadow: 0 4px 20px rgba(160,120,90,.35);
 }
 .predict-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(102,126,234,.5);
+    box-shadow: 0 8px 30px rgba(160,120,90,.5);
 }
 .predict-btn:active { transform: translateY(0); }
 .predict-btn .btn-icon { font-size: 1.1rem; }
@@ -95,8 +96,8 @@
 .result-box {
     display: none;
     margin-top: 28px;
-    background: rgba(255,255,255,.04);
-    border: 1px solid rgba(255,255,255,.1);
+    background: rgba(196,149,106,.04);
+    border: 1px solid rgba(160,120,90,.1);
     border-radius: 16px;
     padding: 28px;
     animation: fadeSlide .4s ease;
@@ -115,7 +116,7 @@
     font-size: .9rem; font-weight: 800; letter-spacing: .5px;
 }
 .result-badge.effect {
-    background: linear-gradient(135deg, #00b894, #00cec9);
+    background: linear-gradient(135deg, #6B9E5B, #81AA77);
     color: #fff; box-shadow: 0 4px 16px rgba(0,184,148,.35);
 }
 .result-badge.no-effect {
@@ -123,7 +124,7 @@
     color: #fff; box-shadow: 0 4px 16px rgba(214,48,49,.35);
 }
 .result-model {
-    font-size: .72rem; color: #636e88;
+    font-size: .72rem; color: #A1887F;
 }
 
 /* Gauge */
@@ -150,10 +151,10 @@
 .prob-row {
     display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
 }
-.prob-label { font-size: .78rem; color: #ccd6f6; min-width: 130px; }
+.prob-label { font-size: .78rem; color: #5D4037; min-width: 130px; }
 .prob-track {
     flex: 1; height: 8px;
-    background: rgba(255,255,255,.08);
+    background: rgba(160,120,90,.1);
     border-radius: 4px; overflow: hidden;
 }
 .prob-fill {
@@ -161,9 +162,9 @@
     transition: width .8s cubic-bezier(.4,0,.2,1);
     width: 0%;
 }
-.prob-fill.effect-fill { background: linear-gradient(90deg, #00b894, #55efc4); }
-.prob-fill.noeffect-fill { background: linear-gradient(90deg, #d63031, #e17055); }
-.prob-pct { font-size: .8rem; font-weight: 700; color: #fff; min-width: 42px; text-align: right; }
+.prob-fill.effect-fill { background: linear-gradient(90deg, #6B9E5B, #81AA77); }
+.prob-fill.noeffect-fill { background: linear-gradient(90deg, #C87864, #D4A46A); }
+.prob-pct { font-size: .8rem; font-weight: 700; color: #4E342E; min-width: 42px; text-align: right; }
 
 /* Spinner */
 .spin { display: none; }
@@ -233,11 +234,11 @@
     <tbody>
     {% for m in models %}
     <tr>
-        <td style="font-weight:600;color:#fff">{{ m.model_name }}{% if m.is_best %}<span class="badge-best"><i class="fas fa-crown"></i> ดีที่สุด</span>{% endif %}</td>
+        <td style="font-weight:600;color:#4E342E">{{ m.model_name }}{% if m.is_best %}<span class="badge-best"><i class="fas fa-crown"></i> ดีที่สุด</span>{% endif %}</td>
         <td>{{ "%.4f"|format(m.accuracy) }}</td>
         <td>{{ "%.4f"|format(m.precision_score) }}</td>
         <td>{{ "%.4f"|format(m.recall) }}</td>
-        <td style="color:#00b894;font-weight:700">{{ "%.4f"|format(m.f1_score) }}</td>
+        <td style="color:#6B9E5B;font-weight:700">{{ "%.4f"|format(m.f1_score) }}</td>
         <td>{{ "%.4f"|format(m.cv_accuracy) }}</td>
         <td>{{ "%.3f"|format(m.roc_auc) }}</td>
     </tr>
@@ -249,11 +250,11 @@
 <h2 class="section-title">Data Statistics (from Database)</h2>
 <div class="grid-2">
     <div class="box">
-        <h3><i class="fas fa-bullseye" style="color:#00b894"></i> Target Distribution</h3>
+        <h3><i class="fas fa-bullseye" style="color:#6B9E5B"></i> Target Distribution</h3>
         <canvas id="targetChart" class="mini-chart"></canvas>
     </div>
     <div class="box">
-        <h3><i class="fas fa-sliders-h" style="color:#667eea"></i> Factor Averages (1-5)</h3>
+        <h3><i class="fas fa-sliders-h" style="color:#A0785A"></i> Factor Averages (1-5)</h3>
         <canvas id="factorChart" class="mini-chart"></canvas>
     </div>
 </div>
@@ -273,8 +274,8 @@
      Favorite Design Option Predictor
      ======================================== -->
 <h2 class="section-title"><i class="fas fa-star" style="color:#fdcb6e"></i> ทำนาย Design Option ที่ใช่สำหรับคุณ</h2>
-<div class="predict-panel" id="optionPanel" style="border-color:rgba(253,203,110,.25);">
-    <h2><i class="fas fa-palette" style="color:#fdcb6e"></i> Favorite Option Predictor</h2>
+<div class="predict-panel" id="optionPanel" style="border-color:rgba(212,164,106,.25);">
+    <h2><i class="fas fa-palette" style="color:#D4A46A"></i> Favorite Option Predictor</h2>
     <p class="sub-desc">กรอกข้อมูลโปรไฟล์ลูกค้า แล้วกดปุ่ม — โมเดลจะจัดอันดับ Top 3 Design Option ที่น่าจะถูกใจที่สุด</p>
 
     <div class="predict-groups">
@@ -336,29 +337,29 @@
     </div>
 
     <button class="predict-btn" id="optionBtn" onclick="runOptionPredict()"
-            style="background:linear-gradient(135deg,#fdcb6e,#e17055);box-shadow:0 4px 20px rgba(253,203,110,.35);">
+            style="background:linear-gradient(135deg,#D4A46A,#C88C64);box-shadow:0 4px 20px rgba(212,164,106,.35);">
         <span class="btn-icon">🏆</span>
         <i class="fas fa-circle-notch spin"></i>
         ค้นหา Option ที่ใช่!
     </button>
 
     <!-- Option Result Box -->
-    <div class="result-box" id="optionResultBox" style="border-color:rgba(253,203,110,.2);">
+    <div class="result-box" id="optionResultBox" style="border-color:rgba(212,164,106,.2);">
         <!-- Winner Banner -->
         <div id="winnerBanner" style="
             text-align:center; padding:28px 20px 20px;
-            background:linear-gradient(135deg,rgba(253,203,110,.12),rgba(225,112,85,.08));
+            background:linear-gradient(135deg,rgba(212,164,106,.12),rgba(200,140,100,.08));
             border-radius:12px; margin-bottom:24px; position:relative; overflow:hidden;
         ">
             <div style="font-size:3rem; margin-bottom:8px; animation:bounceIn .6s ease;">🏆</div>
-            <div style="font-size:.7rem;color:#636e88;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">ดีไซน์ที่แนะนำสำหรับคุณ</div>
-            <div id="winnerOptionNum" style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#fdcb6e,#e17055);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">-</div>
-            <div id="winnerDesc" style="font-size:.85rem;color:#ccd6f6;margin-top:6px;">-</div>
-            <div id="winnerConf" style="font-size:.72rem;color:#636e88;margin-top:8px;">ความมั่นใจ: -</div>
+            <div style="font-size:.7rem;color:#A1887F;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">ดีไซน์ที่แนะนำสำหรับคุณ</div>
+            <div id="winnerOptionNum" style="font-size:2.2rem;font-weight:900;background:linear-gradient(135deg,#C4956A,#A0785A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">-</div>
+            <div id="winnerDesc" style="font-size:.85rem;color:#5D4037;margin-top:6px;">-</div>
+            <div id="winnerConf" style="font-size:.72rem;color:#A1887F;margin-top:8px;">ความมั่นใจ: -</div>
         </div>
 
         <!-- Top-3 Ranking -->
-        <div style="font-size:.75rem;color:#8892b0;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">🥇 อันดับที่แนะนำ Top 3</div>
+        <div style="font-size:.75rem;color:#8D6E63;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">🥇 อันดับที่แนะนำ Top 3</div>
         <div id="rankingCards" style="display:flex;flex-direction:column;gap:12px;"></div>
     </div>
 </div>
@@ -370,7 +371,7 @@ new Chart(document.getElementById('targetChart'), {
     type: 'doughnut',
     data: {
         labels: ['มีผลต่อการซื้อ (1)', 'ไม่มีผล (0)'],
-        datasets: [{ data: [{{ target_dist.get('1',0) }}, {{ target_dist.get('0',0) }}], backgroundColor: ['#00b894','#ff7675'], borderWidth: 0 }]
+        datasets: [{ data: [{{ target_dist.get('1',0) }}, {{ target_dist.get('0',0) }}], backgroundColor: ['#6B9E5B','#C87864'], borderWidth: 0 }]
     },
     options: { plugins: { legend: { position: 'bottom' } } }
 });
@@ -381,7 +382,7 @@ new Chart(document.getElementById('factorChart'), {
         labels: ['ธรรมชาติ','นำเข้า','รสชาติ','ต่างประเทศ','ชื่อเสียงแบรนด์'],
         datasets: [{
             data: [{{ factor_avg.factor_natural }},{{ factor_avg.factor_imported }},{{ factor_avg.factor_taste }},{{ factor_avg.factor_foreign }},{{ factor_avg.factor_brand_fame }}],
-            backgroundColor: 'rgba(102,126,234,0.2)', borderColor: '#667eea', pointBackgroundColor: '#667eea'
+            backgroundColor: 'rgba(196,149,106,0.2)', borderColor: '#C4956A', pointBackgroundColor: '#C4956A'
         }]
     },
     options: { scales: { r: { min: 1, max: 5 } }, plugins: { legend: { display: false } } }
@@ -406,9 +407,9 @@ new Chart(document.getElementById('factorChart'), {
 // ── Rank medal helper ──
 const MEDALS = ['🥇','🥈','🥉'];
 const RANK_COLORS = [
-    {bg:'rgba(253,203,110,.15)',border:'rgba(253,203,110,.4)',text:'#fdcb6e'},
-    {bg:'rgba(176,190,197,.1)', border:'rgba(176,190,197,.3)',text:'#b0bec5'},
-    {bg:'rgba(225,112,85,.1)',  border:'rgba(225,112,85,.3)', text:'#e17055'},
+    {bg:'rgba(212,164,106,.15)',border:'rgba(212,164,106,.4)',text:'#D4A46A'},
+    {bg:'rgba(160,120,90,.1)', border:'rgba(160,120,90,.3)',text:'#A0785A'},
+    {bg:'rgba(200,140,100,.1)',  border:'rgba(200,140,100,.3)', text:'#C88C64'},
 ];
 
 async function runOptionPredict() {

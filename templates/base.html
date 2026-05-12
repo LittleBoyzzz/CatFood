@@ -18,16 +18,17 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: #0f0f1a;
-            color: #e0e0e0;
+            background: #FFF8F0;
+            color: #5D4037;
             display: flex;
             min-height: 100vh
         }
 
+        /* ── Sidebar ── */
         .sidebar {
             width: 240px;
-            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-            border-right: 1px solid rgba(255, 255, 255, .06);
+            background: linear-gradient(180deg, #F5E6D3 0%, #FAECD8 100%);
+            border-right: 1px solid rgba(160,120,90,.12);
             position: fixed;
             top: 0;
             left: 0;
@@ -40,19 +41,19 @@
 
         .sidebar .logo {
             padding: 0 24px 28px;
-            border-bottom: 1px solid rgba(255, 255, 255, .06)
+            border-bottom: 1px solid rgba(160,120,90,.12)
         }
 
         .sidebar .logo h2 {
             font-size: 1.1rem;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #A0785A, #C4956A);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent
         }
 
         .sidebar .logo p {
             font-size: .65rem;
-            color: #636e88;
+            color: #A1887F;
             margin-top: 4px
         }
 
@@ -68,7 +69,7 @@
             padding: 12px 16px;
             margin-bottom: 4px;
             border-radius: 10px;
-            color: #8892b0;
+            color: #8D6E63;
             text-decoration: none;
             font-size: .85rem;
             font-weight: 500;
@@ -76,14 +77,15 @@
         }
 
         .sidebar nav a:hover {
-            background: rgba(102, 126, 234, .1);
-            color: #fff
+            background: rgba(160,120,90,.12);
+            color: #4E342E
         }
 
         .sidebar nav a.active {
-            background: linear-gradient(135deg, rgba(102, 126, 234, .2), rgba(118, 75, 162, .2));
-            color: #fff;
-            border: 1px solid rgba(102, 126, 234, .3)
+            background: linear-gradient(135deg, rgba(196,149,106,.2), rgba(160,120,90,.15));
+            color: #4E342E;
+            border: 1px solid rgba(196,149,106,.35);
+            font-weight: 700
         }
 
         .sidebar nav a i {
@@ -92,6 +94,7 @@
             font-size: .9rem
         }
 
+        /* ── Main ── */
         .main {
             margin-left: 240px;
             flex: 1;
@@ -106,15 +109,16 @@
         .page-header h1 {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #fff
+            color: #4E342E
         }
 
         .page-header p {
             font-size: .8rem;
-            color: #636e88;
+            color: #A1887F;
             margin-top: 4px
         }
 
+        /* ── Cards ── */
         .cards {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -123,16 +127,17 @@
         }
 
         .card {
-            background: linear-gradient(145deg, #1a1a2e, #16213e);
-            border: 1px solid rgba(255, 255, 255, .06);
+            background: #fff;
+            border: 1px solid rgba(160,120,90,.1);
             border-radius: 16px;
             padding: 22px;
-            transition: transform .2s
+            transition: transform .2s;
+            box-shadow: 0 2px 12px rgba(160,120,90,.06)
         }
 
         .card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(102, 126, 234, .12)
+            box-shadow: 0 8px 30px rgba(160,120,90,.12)
         }
 
         .card .icon {
@@ -148,7 +153,7 @@
 
         .card .label {
             font-size: .7rem;
-            color: #8892b0;
+            color: #A1887F;
             text-transform: uppercase;
             letter-spacing: 1px
         }
@@ -156,7 +161,7 @@
         .card .value {
             font-size: 1.6rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #A0785A, #C4956A);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-top: 2px
@@ -164,47 +169,48 @@
 
         .card .sub {
             font-size: .65rem;
-            color: #636e88;
+            color: #A1887F;
             margin-top: 2px
         }
 
         .icon-blue {
-            background: rgba(102, 126, 234, .15);
-            color: #667eea
+            background: rgba(196,149,106,.15);
+            color: #A0785A
         }
 
         .icon-green {
-            background: rgba(0, 184, 148, .15);
-            color: #00b894
+            background: rgba(129,170,119,.15);
+            color: #6B9E5B
         }
 
         .icon-purple {
-            background: rgba(108, 92, 231, .15);
-            color: #6c5ce7
+            background: rgba(161,136,127,.15);
+            color: #8D6E63
         }
 
         .icon-orange {
-            background: rgba(253, 203, 110, .15);
-            color: #fdcb6e
+            background: rgba(220,170,110,.15);
+            color: #D4A46A
         }
 
         .icon-red {
-            background: rgba(255, 118, 117, .15);
-            color: #ff7675
+            background: rgba(200,120,100,.15);
+            color: #C87864
         }
 
         .icon-pink {
-            background: rgba(232, 67, 147, .15);
-            color: #e84393
+            background: rgba(200,140,160,.15);
+            color: #C88CA0
         }
 
+        /* ── Section & Box ── */
         .section-title {
             font-size: 1.1rem;
             font-weight: 700;
             margin: 28px 0 16px;
             padding-left: 12px;
-            border-left: 4px solid #667eea;
-            color: #fff
+            border-left: 4px solid #C4956A;
+            color: #4E342E
         }
 
         .grid-2 {
@@ -215,17 +221,18 @@
         }
 
         .box {
-            background: linear-gradient(145deg, #1a1a2e, #16213e);
-            border: 1px solid rgba(255, 255, 255, .06);
+            background: #fff;
+            border: 1px solid rgba(160,120,90,.1);
             border-radius: 16px;
             padding: 22px;
-            overflow: hidden
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(160,120,90,.06)
         }
 
         .box h3 {
             font-size: .9rem;
             font-weight: 600;
-            color: #fff;
+            color: #4E342E;
             margin-bottom: 14px;
             display: flex;
             align-items: center;
@@ -234,46 +241,55 @@
 
         .box img {
             width: 100%;
-            border-radius: 8px
+            border-radius: 8px;
+            cursor: zoom-in;
+            transition: transform 0.2s;
+        }
+
+        .box img:hover {
+            transform: scale(1.02);
         }
 
         .box p.desc {
             font-size: .72rem;
-            color: #636e88;
+            color: #A1887F;
             margin-top: 2px;
             margin-bottom: 10px
         }
 
+        /* ── Table ── */
         table.data-table {
             width: 100%;
             border-collapse: separate;
             border-spacing: 0;
-            background: linear-gradient(145deg, #1a1a2e, #16213e);
+            background: #fff;
             border-radius: 16px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, .06);
-            margin-bottom: 24px
+            border: 1px solid rgba(160,120,90,.1);
+            margin-bottom: 24px;
+            box-shadow: 0 2px 12px rgba(160,120,90,.06)
         }
 
         table.data-table th {
-            background: rgba(102, 126, 234, .1);
+            background: rgba(196,149,106,.08);
             padding: 12px 16px;
             text-align: left;
             font-size: .75rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #8892b0;
+            color: #8D6E63;
             font-weight: 600
         }
 
         table.data-table td {
             padding: 12px 16px;
-            border-top: 1px solid rgba(255, 255, 255, .04);
-            font-size: .85rem
+            border-top: 1px solid rgba(160,120,90,.06);
+            font-size: .85rem;
+            color: #5D4037
         }
 
         .badge-best {
-            background: linear-gradient(135deg, #00b894, #00cec9);
+            background: linear-gradient(135deg, #6B9E5B, #81AA77);
             color: #fff;
             padding: 2px 10px;
             border-radius: 10px;
@@ -282,18 +298,20 @@
             margin-left: 6px
         }
 
+        /* ── Persona Card ── */
         .persona-card {
-            background: linear-gradient(145deg, #1a1a2e, #16213e);
-            border: 1px solid rgba(255, 255, 255, .06);
+            background: #fff;
+            border: 1px solid rgba(160,120,90,.1);
             border-radius: 16px;
             padding: 24px;
-            margin-bottom: 16px
+            margin-bottom: 16px;
+            box-shadow: 0 2px 12px rgba(160,120,90,.06)
         }
 
         .persona-card h3 {
             font-size: 1rem;
             font-weight: 700;
-            color: #fff;
+            color: #4E342E;
             margin-bottom: 8px
         }
 
@@ -309,28 +327,28 @@
 
         .persona-card .detail {
             font-size: .8rem;
-            color: #8892b0;
+            color: #8D6E63;
             line-height: 1.8
         }
 
         .tag-0 {
-            background: rgba(102, 126, 234, .2);
-            color: #667eea
+            background: rgba(196,149,106,.2);
+            color: #A0785A
         }
 
         .tag-1 {
-            background: rgba(0, 184, 148, .2);
-            color: #00b894
+            background: rgba(129,170,119,.2);
+            color: #6B9E5B
         }
 
         .tag-2 {
-            background: rgba(225, 112, 85, .2);
-            color: #e17055
+            background: rgba(200,140,100,.2);
+            color: #C88C64
         }
 
         .bar {
             height: 5px;
-            background: rgba(255, 255, 255, .06);
+            background: rgba(160,120,90,.1);
             border-radius: 3px;
             overflow: hidden;
             margin: 4px 0
@@ -338,7 +356,7 @@
 
         .bar .fill {
             height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            background: linear-gradient(90deg, #C4956A, #A0785A);
             border-radius: 3px
         }
 
@@ -349,13 +367,13 @@
         footer {
             text-align: center;
             padding: 24px;
-            color: #4a5568;
+            color: #BCAAA4;
             font-size: .7rem;
-            border-top: 1px solid rgba(255, 255, 255, .04);
+            border-top: 1px solid rgba(160,120,90,.08);
             margin-top: 30px
         }
 
-        /* Modal Lightbox */
+        /* ── Modal Lightbox ── */
         .modal {
             display: none;
             position: fixed;
@@ -364,7 +382,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
+            background-color: rgba(62, 39, 35, 0.85);
             backdrop-filter: blur(5px);
             align-items: center;
             justify-content: center;
@@ -386,7 +404,7 @@
             position: absolute;
             top: 20px;
             right: 35px;
-            color: #fff;
+            color: #FAECD8;
             font-size: 40px;
             font-weight: bold;
             cursor: pointer;
@@ -394,26 +412,17 @@
         }
 
         .close-modal:hover {
-            color: #bbb;
+            color: #fff;
         }
 
-        .box img {
-            cursor: zoom-in;
-            transition: transform 0.2s;
-        }
-
-        .box img:hover {
-            transform: scale(1.02);
-        }
-
-        /* ── Hero Banner (Global) ── */
+        /* ── Hero Banner ── */
         .hero {
             position: relative; border-radius: 24px; overflow: hidden;
             padding: 56px 48px; margin-bottom: 32px;
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background: linear-gradient(135deg, #A0785A, #C4956A, #D4A574);
             background-size: 300% 300%;
             animation: gradientShift 8s ease infinite;
-            box-shadow: 0 20px 60px rgba(102,126,234,0.25);
+            box-shadow: 0 20px 60px rgba(160,120,90,0.25);
         }
         @keyframes gradientShift {
             0%   { background-position: 0% 50%; }
@@ -422,33 +431,33 @@
         }
         .hero-orb {
             position: absolute; border-radius: 50%; filter: blur(60px);
-            opacity: 0.35; animation: floatOrb 6s ease-in-out infinite;
+            opacity: 0.3; animation: floatOrb 6s ease-in-out infinite;
         }
-        .hero-orb.o1 { width:260px;height:260px;background:#667eea;top:-80px;right:-60px;animation-delay:0s; }
-        .hero-orb.o2 { width:180px;height:180px;background:#e84393;bottom:-40px;left:30%;animation-delay:-2s; }
-        .hero-orb.o3 { width:140px;height:140px;background:#00b894;top:20px;left:-40px;animation-delay:-4s; }
+        .hero-orb.o1 { width:260px;height:260px;background:#FAECD8;top:-80px;right:-60px;animation-delay:0s; }
+        .hero-orb.o2 { width:180px;height:180px;background:#E8C9A8;bottom:-40px;left:30%;animation-delay:-2s; }
+        .hero-orb.o3 { width:140px;height:140px;background:#DEB896;top:20px;left:-40px;animation-delay:-4s; }
         @keyframes floatOrb {
             0%,100% { transform: translateY(0) scale(1); }
             50%     { transform: translateY(-18px) scale(1.08); }
         }
         .hero::before {
             content:''; position:absolute; inset:0;
-            background-image: linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
-                              linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+            background-image: linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),
+                              linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
             background-size: 40px 40px;
         }
         #heroCanvas { position:absolute; inset:0; pointer-events:none; }
         .hero-content { position:relative; z-index:10; }
         .hero-badge {
             display:inline-flex; align-items:center; gap:8px;
-            background:rgba(102,126,234,.18); border:1px solid rgba(102,126,234,.4);
-            border-radius:50px; padding:6px 16px; font-size:.72rem; color:#a5b4fc;
+            background:rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.35);
+            border-radius:50px; padding:6px 16px; font-size:.72rem; color:#fff;
             letter-spacing:1px; text-transform:uppercase; margin-bottom:20px;
             backdrop-filter:blur(8px);
         }
         .hero-badge .dot {
-            width:7px; height:7px; border-radius:50%; background:#667eea;
-            box-shadow:0 0 8px #667eea; animation:pulse 1.5s ease-in-out infinite;
+            width:7px; height:7px; border-radius:50%; background:#fff;
+            box-shadow:0 0 8px rgba(255,255,255,.8); animation:pulse 1.5s ease-in-out infinite;
         }
         @keyframes pulse {
             0%,100%{ opacity:1; transform:scale(1); }
@@ -459,7 +468,7 @@
             color:#fff; margin-bottom:14px; letter-spacing:-.5px;
         }
         .hero h1 span {
-            background:linear-gradient(135deg,#a78bfa,#60a5fa,#34d399);
+            background:linear-gradient(135deg,#FAECD8,#FFF5EB,#FFF);
             -webkit-background-clip:text; -webkit-text-fill-color:transparent;
             background-size:200%; animation:shimmer 3s linear infinite;
         }
@@ -468,23 +477,23 @@
             100%{ background-position:200% center; }
         }
         .hero p.tagline {
-            font-size:1rem; color:rgba(255,255,255,.6);
+            font-size:1rem; color:rgba(255,255,255,.75);
             max-width:560px; line-height:1.7; margin-bottom:28px;
         }
         .hero-stats { display:flex; gap:12px; flex-wrap:wrap; }
         .hero-stat {
-            background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+            background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.25);
             border-radius:12px; padding:10px 18px; backdrop-filter:blur(10px);
             display:flex; align-items:center; gap:10px; transition:all .3s;
         }
         .hero-stat:hover {
-            background:rgba(102,126,234,.15); border-color:rgba(102,126,234,.4);
+            background:rgba(255,255,255,.25); border-color:rgba(255,255,255,.4);
             transform:translateY(-2px);
         }
         .hero-stat .hs-icon { font-size:1.1rem; }
         .hero-stat .hs-val { font-size:1.3rem; font-weight:800; color:#fff; line-height:1; }
         .hero-stat .hs-lbl {
-            font-size:.65rem; color:rgba(255,255,255,.45);
+            font-size:.65rem; color:rgba(255,255,255,.6);
             text-transform:uppercase; letter-spacing:.8px; margin-top:2px;
         }
         .count-up { display:inline-block; }
@@ -500,7 +509,7 @@
             <p>Packaging Survey Dashboard</p>
         </div>
         <nav>
-            <a href="/" class="{{ 'active' if request.endpoint == 'home' }}"><i class="fas fa-home"></i> Home</a>
+            <a href="/" class="{{ 'active' if request.endpoint == 'home' }}"><i class="fas fa-home"></i> หน้าหลัก</a>
             <a href="/unsupervised" class="{{ 'active' if request.endpoint == 'unsupervised' }}"><i
                     class="fas fa-project-diagram"></i> Unsupervised</a>
             <a href="/supervised" class="{{ 'active' if request.endpoint == 'supervised' }}"><i
@@ -526,8 +535,8 @@
     </div>
 
     <script>
-        Chart.defaults.color = '#8892b0';
-        Chart.defaults.borderColor = 'rgba(255,255,255,0.04)';
+        Chart.defaults.color = '#8D6E63';
+        Chart.defaults.borderColor = 'rgba(160,120,90,0.08)';
         Chart.defaults.font.family = 'Inter';
 
         // Image Zoom Modal Logic
@@ -536,7 +545,6 @@
             const modalImg = document.getElementById("modalImage");
             const closeBtn = document.querySelector(".close-modal");
 
-            // Prevent default ghost dragging of image
             modalImg.ondragstart = function () { return false; };
 
             let scale = 1;
@@ -548,7 +556,6 @@
                 img.onclick = function () {
                     modal.style.display = "flex";
                     modalImg.src = this.src;
-                    // Reset zoom & pan
                     scale = 1;
                     translateX = 0; translateY = 0;
                     modalImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
@@ -559,29 +566,22 @@
             closeBtn.onclick = closeModal;
             modal.onclick = (e) => { if (e.target.id === "modalContainer" || e.target === modal) closeModal(); }
 
-            // Zoom to mouse cursor
             modalImg.addEventListener('wheel', function (e) {
                 e.preventDefault();
-
                 const rect = modalImg.getBoundingClientRect();
-                // Mouse position relative to center of image
                 const x = e.clientX - rect.left - rect.width / 2;
                 const y = e.clientY - rect.top - rect.height / 2;
-
                 const zoomFactor = e.deltaY > 0 ? 0.9 : 1.1;
-                const newScale = Math.min(Math.max(0.5, scale * zoomFactor), 10); // Max 10x
-
+                const newScale = Math.min(Math.max(0.5, scale * zoomFactor), 10);
                 const ratio = 1 - (newScale / scale);
                 translateX += x * ratio;
                 translateY += y * ratio;
-
                 scale = newScale;
                 modalImg.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
             }, { passive: false });
 
-            // Drag to pan
             modalImg.addEventListener('mousedown', function (e) {
-                e.preventDefault(); // Stop default selection
+                e.preventDefault();
                 isDragging = true;
                 startX = e.clientX - translateX;
                 startY = e.clientY - translateY;
@@ -626,8 +626,8 @@
             const pts = Array.from({length:N}, ()=>({ x:Math.random()*canvas.width, y:Math.random()*canvas.height, r:Math.random()*1.6+.4, vx:(Math.random()-.5)*.35, vy:(Math.random()-.5)*.35, a:Math.random()*.5+.15 }));
             function draw(){
                 ctx.clearRect(0,0,canvas.width,canvas.height);
-                pts.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; if(p.x<0)p.x=canvas.width; if(p.x>canvas.width)p.x=0; if(p.y<0)p.y=canvas.height; if(p.y>canvas.height)p.y=0; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`rgba(165,180,252,${p.a})`; ctx.fill(); });
-                for(let i=0;i<N;i++) for(let j=i+1;j<N;j++){ const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy); if(d<90){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(165,180,252,${.12*(1-d/90)})`;ctx.lineWidth=.6;ctx.stroke();}}
+                pts.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; if(p.x<0)p.x=canvas.width; if(p.x>canvas.width)p.x=0; if(p.y<0)p.y=canvas.height; if(p.y>canvas.height)p.y=0; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`rgba(255,255,255,${p.a})`; ctx.fill(); });
+                for(let i=0;i<N;i++) for(let j=i+1;j<N;j++){ const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy); if(d<90){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle=`rgba(255,255,255,${.15*(1-d/90)})`;ctx.lineWidth=.6;ctx.stroke();}}
                 requestAnimationFrame(draw);
             }
             draw();

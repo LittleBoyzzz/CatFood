@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}Home{% endblock %}
+{% block title %}หน้าหลัก{% endblock %}
 
 {% block extra_css %}
 <style>
@@ -11,14 +11,15 @@
     margin-bottom: 32px;
 }
 .team-card {
-    background: linear-gradient(145deg, #1a1a2e, #16213e);
-    border: 1px solid rgba(255,255,255,.07);
+    background: #fff;
+    border: 1px solid rgba(160,120,90,.1);
     border-radius: 20px;
     padding: 32px 24px;
     text-align: center;
     transition: transform .25s, box-shadow .25s;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 2px 12px rgba(160,120,90,.06);
 }
 .team-card::before {
     content: '';
@@ -27,12 +28,12 @@
     height: 4px;
     border-radius: 20px 20px 0 0;
 }
-.team-card:nth-child(1)::before { background: linear-gradient(90deg, #667eea, #764ba2); }
-.team-card:nth-child(2)::before { background: linear-gradient(90deg, #00b894, #00cec9); }
-.team-card:nth-child(3)::before { background: linear-gradient(90deg, #fdcb6e, #e17055); }
+.team-card:nth-child(1)::before { background: linear-gradient(90deg, #A0785A, #C4956A); }
+.team-card:nth-child(2)::before { background: linear-gradient(90deg, #6B9E5B, #81AA77); }
+.team-card:nth-child(3)::before { background: linear-gradient(90deg, #D4A46A, #C88C64); }
 .team-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 16px 40px rgba(102,126,234,.18);
+    box-shadow: 0 16px 40px rgba(160,120,90,.15);
 }
 .team-avatar {
     width: 72px; height: 72px;
@@ -42,19 +43,19 @@
     font-size: 1.6rem; font-weight: 900; color: #fff;
     letter-spacing: -1px;
 }
-.team-card:nth-child(1) .team-avatar { background: linear-gradient(135deg, #667eea, #764ba2); }
-.team-card:nth-child(2) .team-avatar { background: linear-gradient(135deg, #00b894, #00cec9); }
-.team-card:nth-child(3) .team-avatar { background: linear-gradient(135deg, #fdcb6e, #e17055); }
+.team-card:nth-child(1) .team-avatar { background: linear-gradient(135deg, #A0785A, #C4956A); }
+.team-card:nth-child(2) .team-avatar { background: linear-gradient(135deg, #6B9E5B, #81AA77); }
+.team-card:nth-child(3) .team-avatar { background: linear-gradient(135deg, #D4A46A, #C88C64); }
 .team-name {
     font-size: 1.05rem;
     font-weight: 800;
-    color: #fff;
+    color: #4E342E;
     margin: 0 0 6px;
     line-height: 1.3;
 }
 .team-role {
     font-size: .78rem;
-    color: #8892b0;
+    color: #A1887F;
     margin: 0 0 14px;
     line-height: 1.7;
     min-height: 48px;
@@ -68,9 +69,17 @@
     text-transform: uppercase;
     letter-spacing: .8px;
 }
-.team-card:nth-child(1) .team-tag { background: rgba(102,126,234,.2); color: #a5b4fc; }
-.team-card:nth-child(2) .team-tag { background: rgba(0,184,148,.2); color: #55efc4; }
-.team-card:nth-child(3) .team-tag { background: rgba(253,203,110,.2); color: #fdcb6e; }
+.team-card:nth-child(1) .team-tag { background: rgba(160,120,90,.12); color: #A0785A; }
+.team-card:nth-child(2) .team-tag { background: rgba(107,158,91,.12); color: #6B9E5B; }
+.team-card:nth-child(3) .team-tag { background: rgba(212,164,106,.12); color: #D4A46A; }
+
+/* ── Descriptive Stats ── */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.stat-table { width: 100%; border-collapse: collapse; font-size: .78rem; }
+.stat-table th { background: rgba(196,149,106,.08); padding: 8px 10px; text-align: left; color: #8D6E63; font-size: .7rem; text-transform: uppercase; letter-spacing: .5px; }
+.stat-table td { padding: 7px 10px; border-top: 1px solid rgba(160,120,90,.06); color: #5D4037; }
+.stat-table tr:hover td { background: rgba(196,149,106,.05); }
+.stat-label { color: #A0785A; font-weight: 600; }
 </style>
 {% endblock %}
 
@@ -136,75 +145,117 @@
     </div>
 </div>
 
+<!-- ── Descriptive Statistics ── -->
+<h2 class="section-title"><i class="fas fa-chart-bar" style="color:#C4956A"></i> สถิติเชิงพรรณนา (Descriptive Statistics)</h2>
 
-<!-- Demographics + Cluster Summary -->
-<h2 class="section-title">Demographics Overview</h2>
+<div class="stats-grid">
+    <div class="box">
+        <h3><i class="fas fa-balance-scale" style="color:#A0785A"></i> ปัจจัยที่ส่งผลต่อการซื้อ</h3>
+        <table class="stat-table">
+            <thead><tr><th>ตัวแปร</th><th>ค่าเฉลี่ย</th><th>SD</th><th>Min</th><th>Median</th><th>Max</th></tr></thead>
+            <tbody>
+            {% for d in desc_factor %}
+            <tr>
+                <td class="stat-label">{{ d.column_name.replace('factor_','').replace('_',' ').title() }}</td>
+                <td>{{ d.mean }}</td><td>{{ d.std }}</td><td>{{ d.min_val }}</td><td>{{ d.median }}</td><td>{{ d.max_val }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="box">
+        <h3><i class="fas fa-box" style="color:#6B9E5B"></i> คุณสมบัติบรรจุภัณฑ์</h3>
+        <table class="stat-table">
+            <thead><tr><th>ตัวแปร</th><th>ค่าเฉลี่ย</th><th>SD</th><th>Min</th><th>Median</th><th>Max</th></tr></thead>
+            <tbody>
+            {% for d in desc_pkg %}
+            <tr>
+                <td class="stat-label">{{ d.column_name.replace('pkg_','').replace('_',' ').title() }}</td>
+                <td>{{ d.mean }}</td><td>{{ d.std }}</td><td>{{ d.min_val }}</td><td>{{ d.median }}</td><td>{{ d.max_val }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="box" style="margin-bottom:24px">
+    <h3><i class="fas fa-palette" style="color:#C88C64"></i> คะแนนความต้องการซื้อ (Want-to-Buy) — ทุก Option</h3>
+    <table class="stat-table">
+        <thead><tr><th>ตัวเลือก</th><th>ค่าเฉลี่ย</th><th>SD</th><th>Min</th><th>Median</th><th>Max</th><th>จำนวน</th></tr></thead>
+        <tbody>
+        {% for d in desc_opt %}
+        <tr style="{{ 'background:rgba(107,158,91,.08)' if loop.index == 1 else '' }}">
+            <td class="stat-label">{{ d.column_name.replace('opt','Option ').replace('_want_buy','') }}{% if loop.index == 1 %} 🏆{% endif %}</td>
+            <td style="{{ 'color:#6B9E5B;font-weight:700' if loop.index == 1 else '' }}">{{ d.mean }}</td>
+            <td>{{ d.std }}</td><td>{{ d.min_val }}</td><td>{{ d.median }}</td><td>{{ d.max_val }}</td><td>{{ d.count }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Demographics -->
+<h2 class="section-title">ข้อมูลประชากรศาสตร์</h2>
 <div class="grid-2">
     <div class="box">
-        <h3><i class="fas fa-users" style="color:#667eea"></i> Age Distribution</h3>
+        <h3><i class="fas fa-users" style="color:#A0785A"></i> การกระจายอายุ</h3>
         <canvas id="ageChart" class="mini-chart"></canvas>
     </div>
     <div class="box">
-        <h3><i class="fas fa-venus-mars" style="color:#e17055"></i> Gender Distribution</h3>
+        <h3><i class="fas fa-venus-mars" style="color:#C88C64"></i> การกระจายเพศ</h3>
         <canvas id="genderChart" class="mini-chart"></canvas>
     </div>
 </div>
 
-<h2 class="section-title">Customer Segments (Persona Preview)</h2>
+<h2 class="section-title">Customer Segments (ตัวอย่าง Persona)</h2>
 {% for p in personas %}
 <div class="persona-card">
     <h3><span class="tag tag-{{ p.cluster_id }}">Cluster {{ p.cluster_id }}</span> {{ p.engagement }}</h3>
     <p class="detail">
-        <strong>จำนวนสมาชิก:</strong> {{ p.size }} คน ({{ p.pct }}%) &nbsp;|&nbsp;
-        <strong>ปัจจัยหลักที่ให้ความสำคัญ:</strong> {{ p.top_factor }} &nbsp;|&nbsp;
-        <strong>บรรจุภัณฑ์ที่ชื่นชอบ:</strong> {{ p.top_pkg }} &nbsp;|&nbsp;
-        <strong>ตัวเลือกที่ต้องการซื้อ:</strong> {{ p.top_option }} &nbsp;|&nbsp;
+        <strong>จำนวน:</strong> {{ p.size }} คน ({{ p.pct }}%) &nbsp;|&nbsp;
+        <strong>ปัจจัยหลัก:</strong> {{ p.top_factor }} &nbsp;|&nbsp;
+        <strong>บรรจุภัณฑ์:</strong> {{ p.top_pkg }} &nbsp;|&nbsp;
+        <strong>ตัวเลือก:</strong> {{ p.top_option }} &nbsp;|&nbsp;
         <strong>โปรไฟล์:</strong> {{ p.age }}, {{ p.gender }}
     </p>
 </div>
 {% endfor %}
 
-<!-- ── Team Members ── -->
-<h2 class="section-title"><i class="fas fa-users" style="color:#a5b4fc"></i> ทีมผู้จัดทำ</h2>
+<!-- ── Team ── -->
+<h2 class="section-title"><i class="fas fa-users" style="color:#C4956A"></i> ทีมผู้จัดทำ</h2>
 <div class="team-grid">
-
-    <!-- ► คนที่ 1 -->
     <div class="team-card">
         <div class="team-avatar">👤</div>
         <h1 class="team-name">มนัสวิน ชั้นศิริโสภณ</h1>
-        <h2 class="team-role">รายละอียดงานที่รับผิดชอบ</h2>
+        <h2 class="team-role">รายละเอียดงานที่รับผิดชอบ</h2>
         <span class="team-tag">Student ID: 1660900992</span>
     </div>
-
-    <!-- ► คนที่ 2 -->
     <div class="team-card">
         <div class="team-avatar">👤</div>
         <h1 class="team-name">ภัทรพงศ์ ดีเลิศ</h1>
-        <h2 class="team-role">รายละอียดงานที่รับผิดชอบ</h2>
+        <h2 class="team-role">รายละเอียดงานที่รับผิดชอบ</h2>
         <span class="team-tag">Student ID: 1660903434</span>
     </div>
-
-    <!-- ► คนที่ 3 -->
     <div class="team-card">
         <div class="team-avatar">👤</div>
         <h1 class="team-name">วีรภัทร ศักดิ์เพชร</h1>
         <h2 class="team-role">Frontend</h2>
         <span class="team-tag">Student ID: 1660904267</span>
     </div>
-
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-/* ── Chart.js ── */
 new Chart(document.getElementById('ageChart'), {
     type: 'bar',
     data: {
         labels: [{% for a in age %}'{{ a.age }}'{{ "," if not loop.last }}{% endfor %}],
         datasets: [{
             data: [{% for a in age %}{{ a.c }}{{ "," if not loop.last }}{% endfor %}],
-            backgroundColor: ['#667eea','#764ba2','#00b894','#fdcb6e'],
+            backgroundColor: ['#C4956A','#A0785A','#6B9E5B','#D4A46A','#C88C64'],
             borderRadius: 8, borderSkipped: false
         }]
     },
@@ -217,7 +268,7 @@ new Chart(document.getElementById('genderChart'), {
         labels: [{% for g in gender %}'{{ g.gender }}'{{ "," if not loop.last }}{% endfor %}],
         datasets: [{
             data: [{% for g in gender %}{{ g.c }}{{ "," if not loop.last }}{% endfor %}],
-            backgroundColor: ['#e84393','#667eea','#00cec9'],
+            backgroundColor: ['#C88CA0','#A0785A','#81AA77'],
             borderWidth: 0
         }]
     },

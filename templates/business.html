@@ -4,131 +4,125 @@
 {% block content %}
 <div class="hero">
     <canvas id="heroCanvas"></canvas>
-    <div class="hero-orb o1" style="background:#f9ca24"></div>
-    <div class="hero-orb o2" style="background:#00b894"></div>
-    <div class="hero-orb o3" style="background:#6c5ce7"></div>
+    <div class="hero-orb o1"></div>
+    <div class="hero-orb o2"></div>
+    <div class="hero-orb o3"></div>
     <div class="hero-content">
         <div class="hero-badge">
-            <span class="dot" style="background:#f9ca24;box-shadow:0 0 8px #f9ca24"></span>
-            Business Insight · Strategic Recommendations
+            <span class="dot"></span>
+            Business Insight · ข้อเสนอแนะเชิงกลยุทธ์
         </div>
         <h1>Packaging <span>Strategy</span><br>Intelligence</h1>
         <p class="tagline">ข้อเสนอแนะเชิงกลยุทธ์จากการวิเคราะห์ด้วย AI — ข้อมูลจาก {{ total }} แบบสอบถาม ครอบคลุม 3 กลุ่มลูกค้า</p>
         <div class="hero-stats">
             <div class="hero-stat">
                 <span class="hs-icon">✅</span>
-                <div>
-                    <div class="hs-val">67%</div>
-                    <div class="hs-lbl">บรรจุภัณฑ์มีผลต่อการซื้อ</div>
-                </div>
+                <div><div class="hs-val">{{ influence_pct }}%</div><div class="hs-lbl">บรรจุภัณฑ์มีผลต่อการซื้อ</div></div>
             </div>
             <div class="hero-stat">
                 <span class="hs-icon">🎨</span>
-                <div>
-                    <div class="hs-val" style="font-size:.95rem">Option 3</div>
-                    <div class="hs-lbl">ดีไซน์ที่ดีที่สุด</div>
-                </div>
+                <div><div class="hs-val" style="font-size:.95rem">Option {{ best_option_num }}</div><div class="hs-lbl">ดีไซน์ที่ดีที่สุด ({{ best_option_score }})</div></div>
             </div>
             <div class="hero-stat">
                 <span class="hs-icon">🤖</span>
-                <div>
-                    <div class="hs-val"><span class="count-up" data-target="{{ (best.accuracy * 100)|round(1) }}" data-decimals="1">0</span>%</div>
-                    <div class="hs-lbl">ความแม่นยำ ML</div>
-                </div>
+                <div><div class="hs-val"><span class="count-up" data-target="{{ (best.accuracy * 100)|round(1) }}" data-decimals="1">0</span>%</div><div class="hs-lbl">ความแม่นยำ ML</div></div>
             </div>
             <div class="hero-stat">
                 <span class="hs-icon">👥</span>
-                <div>
-                    <div class="hs-val">3</div>
-                    <div class="hs-lbl">กลุ่มลูกค้า</div>
-                </div>
+                <div><div class="hs-val">{{ personas|length }}</div><div class="hs-lbl">กลุ่มลูกค้า</div></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Key Findings Cards -->
+<!-- Key Findings -->
 <div class="cards">
     <div class="card">
         <div class="icon icon-green"><i class="fas fa-check-circle"></i></div>
         <div class="label">ผลการค้นพบหลัก</div>
-        <div class="value" style="font-size:.95rem">67% บอกว่าบรรจุภัณฑ์มีความสำคัญ</div>
+        <div class="value" style="font-size:.95rem">{{ influence_pct }}% บอกว่าสำคัญ</div>
         <div class="sub">packaging_influence = 1</div>
     </div>
     <div class="card">
         <div class="icon icon-purple"><i class="fas fa-box-open"></i></div>
-        <div class="label">คุณสมบัติที่โดดเด่นที่สุด</div>
+        <div class="label">คุณสมบัติที่โดดเด่น</div>
         <div class="value" style="font-size:.95rem">Benefit Symbol</div>
         <div class="sub">ค่าเฉลี่ย = {{ pkg_avg.pkg_benefit_symbol }}</div>
     </div>
     <div class="card">
         <div class="icon icon-blue"><i class="fas fa-palette"></i></div>
         <div class="label">ดีไซน์ที่ดีที่สุด</div>
-        <div class="value" style="font-size:.95rem">Option 3</div>
-        <div class="sub">คะแนนความต้องการซื้อสูงสุด</div>
+        <div class="value" style="font-size:.95rem">Option {{ best_option_num }}</div>
+        <div class="sub">want-to-buy: {{ best_option_score }}</div>
     </div>
     <div class="card">
         <div class="icon icon-orange"><i class="fas fa-utensils"></i></div>
         <div class="label">ปัจจัยหลัก</div>
         <div class="value" style="font-size:.95rem">Taste</div>
-        <div class="sub">พบในทุกกลุ่มลูกค้า</div>
+        <div class="sub">สำคัญที่สุดในทุกกลุ่ม</div>
     </div>
     <div class="card">
         <div class="icon icon-red"><i class="fas fa-robot"></i></div>
-        <div class="label">ความแม่นยำของ ML</div>
+        <div class="label">ความแม่นยำ ML</div>
         <div class="value">{{ "%.1f"|format(best.accuracy * 100) }}%</div>
         <div class="sub">{{ best.model_name }}</div>
     </div>
 </div>
 
-<!-- Strategic Recommendations -->
-<h2 class="section-title">Strategic Recommendations</h2>
+<!-- Option 3 Analysis -->
+<h2 class="section-title"><i class="fas fa-trophy" style="color:#D4A46A"></i> ทำไม Option {{ best_option_num }} ถึงเป็นดีไซน์ที่ดีที่สุด?</h2>
+<div class="grid-2">
+    {% for c in opt3_charts %}
+    <div class="box">
+        <h3><i class="fas fa-chart-bar" style="color:#6B9E5B"></i> {{ c.title }}</h3>
+        <p class="desc">{{ c.desc }}</p>
+        <img src="/output/{{ c.file }}" alt="{{ c.title }}" loading="lazy">
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Strategies -->
+<h2 class="section-title">กลยุทธ์เชิงธุรกิจ (Strategic Recommendations)</h2>
 
 <div class="box" style="margin-bottom:18px">
-    <h3><i class="fas fa-lightbulb" style="color:#fdcb6e"></i> 1. Packaging Design Strategy</h3>
-    <div class="detail" style="font-size:.85rem;color:#8892b0;line-height:2">
-        <p><strong style="color:#fff">Benefit Symbol คืออันดับ 1 ที่สำคัญที่สุด</strong> (เฉลี่ย {{ pkg_avg.pkg_benefit_symbol }}/5) — ผู้บริโภคต้องการสัญลักษณ์ที่ชัดเจน เช่น ลดก้อนผม, เสริมกระดูกพร้อม ควรเป็นส่วนเด่นที่สุดบนบรรจุภัณฑ์</p>
-        <p style="margin-top:8px"><strong style="color:#fff">Kibble Image อยู่อันดับ 2</strong> (เฉลี่ย {{ pkg_avg.pkg_kibble_image }}/5) — การแสดงรูปเม็ดอาหารจริงบนบรรจุภัณฑ์ช่วยสร้างความน่าเชื่อถือและช่วยให้ผู้ซื้อนึกภาพสินค้าได้ชัดเจนขึ้น</p>
-        <p style="margin-top:8px"><strong style="color:#fff">สัญลักษณ์รับประกันมีความสำคัญ</strong> (เฉลี่ย {{ pkg_avg.pkg_guarantee }}/5) — รางวัล, ใบรับรอง, และป้าย "ขายดีอันดับ 1" มีผลอย่างมากต่อการตัดสินใจซื้อ</p>
+    <h3><i class="fas fa-lightbulb" style="color:#D4A46A"></i> 1. กลยุทธ์ออกแบบบรรจุภัณฑ์</h3>
+    <div class="detail" style="font-size:.85rem;color:#8D6E63;line-height:2">
+        <p><strong style="color:#4E342E">Benefit Symbol คืออันดับ 1</strong> (เฉลี่ย {{ pkg_avg.pkg_benefit_symbol }}/5) — ผู้บริโภคต้องการสัญลักษณ์ประโยชน์ที่ชัดเจน</p>
+        <p style="margin-top:8px"><strong style="color:#4E342E">Kibble Image อันดับ 2</strong> (เฉลี่ย {{ pkg_avg.pkg_kibble_image }}/5) — แสดงรูปเม็ดอาหารจริงสร้างความน่าเชื่อถือ</p>
+        <p style="margin-top:8px"><strong style="color:#4E342E">สัญลักษณ์รับประกัน</strong> (เฉลี่ย {{ pkg_avg.pkg_guarantee }}/5) — รางวัล ใบรับรอง มีผลต่อการตัดสินใจซื้อ</p>
     </div>
 </div>
 
 <div class="box" style="margin-bottom:18px">
-    <h3><i class="fas fa-users" style="color:#667eea"></i> 2. Customer Segment Strategies</h3>
+    <h3><i class="fas fa-users" style="color:#A0785A"></i> 2. กลยุทธ์ตามกลุ่มลูกค้า (จาก Clustering จริง)</h3>
     {% for p in personas %}
-    <div style="padding:14px 0;border-bottom:1px solid rgba(255,255,255,.04)">
-        <p style="font-weight:700;color:#fff;font-size:.9rem">
+    <div style="padding:14px 0;border-bottom:1px solid rgba(160,120,90,.06)">
+        <p style="font-weight:700;color:#4E342E;font-size:.9rem">
             <span class="tag tag-{{ p.cluster_id }}">Cluster {{ p.cluster_id }}</span>
             {{ p.engagement }} ({{ p.size }} คน, {{ p.pct }}%)
         </p>
-        <p style="color:#8892b0;font-size:.82rem;margin-top:6px">{{ p.description }}</p>
-        <p style="color:#636e88;font-size:.78rem;margin-top:4px">
-            <i class="fas fa-arrow-right" style="color:#667eea"></i>
-            {% if p.cluster_id == 0 %}
-            <strong>กลยุทธ์:</strong> เน้นเรื่องส่วนผสมทางธรรมชาติและการสื่อสารประโยชน์ด้านสุขภาพ กลุ่มนี้ตอบสนองต่อสารเสริมสุขภาพแต่ระวังบรรจุภัณฑ์ที่ดูสลับซับซ้อนเกินไป ควรใช้ดีไซน์เรียบง่ายและให้ข้อมูลครบถ้วน
-            {% elif p.cluster_id == 1 %}
-            <strong>กลยุทธ์:</strong> นี่คือกลุ่มที่ใหญ่ที่สุด เน้นภาพรสชาติและ Benefit Symbol ให้โดดเด่น ดีไซน์ Option 3 ใช้ได้ผลดีที่สุดกับกลุ่มนี้ ตั้งราคาระดับกลางพร้อมเสนอคุณค่าที่ชัดเจน
-            {% else %}
-            <strong>กลยุทธ์:</strong> การวางพอสิชั่น Premium ได้ผลดีที่สุด กลุ่มนี้ใส่ใจคุณภาพทุกด้านของบรรจุภัณฑ์ ใช้วัสดุ Premium, ข้อมูลส่วนผสมเชิงลึก และใบรับรอง กลุ่มนี้ยินดีจ่ายเพิ่มเพื่อคุณภาพที่ดีกว่า
-            {% endif %}
+        <p style="color:#8D6E63;font-size:.82rem;margin-top:6px">{{ p.description }}</p>
+        <p style="color:#5D4037;font-size:.8rem;margin-top:6px">
+            <i class="fas fa-star" style="color:#D4A46A"></i>
+            <strong>ปัจจัยหลัก:</strong> {{ p.top_factor }} &nbsp;|&nbsp;
+            <strong>บรรจุภัณฑ์:</strong> {{ p.top_pkg }} &nbsp;|&nbsp;
+            <strong>ดีไซน์:</strong> {{ p.top_option }}
         </p>
     </div>
     {% endfor %}
 </div>
 
 <div class="box" style="margin-bottom:18px">
-    <h3><i class="fas fa-palette" style="color:#e84393"></i> 3. Design Option Recommendation</h3>
-    <p style="color:#8892b0;font-size:.82rem;margin-bottom:14px">เปรียบเทียบคะแนนความต้องการซื้อของดีไซน์บรรจุภัณฑ์ทั้ง 10 แบบ</p>
+    <h3><i class="fas fa-palette" style="color:#C88CA0"></i> 3. เปรียบเทียบ Design Option</h3>
+    <p style="color:#8D6E63;font-size:.82rem;margin-bottom:14px">เปรียบเทียบคะแนนความต้องการซื้อของดีไซน์ 10 แบบจากฐานข้อมูลจริง</p>
     <canvas id="optChart" style="height:220px"></canvas>
 </div>
 
-<!-- Packaging Attribute Ranking -->
-<h2 class="section-title">Packaging Attribute Ranking</h2>
+<h2 class="section-title">อันดับคุณสมบัติบรรจุภัณฑ์</h2>
 <div class="box">
-    <h3><i class="fas fa-sort-amount-down" style="color:#00b894"></i> Average Importance Score (1-5)</h3>
+    <h3><i class="fas fa-sort-amount-down" style="color:#6B9E5B"></i> คะแนนความสำคัญเฉลี่ย (1-5)</h3>
     <canvas id="pkgChart" style="height:280px"></canvas>
 </div>
-
 {% endblock %}
 
 {% block extra_js %}
@@ -151,7 +145,7 @@ new Chart(document.getElementById('pkgChart'), {
         labels: sorted.map(s=>s[0]),
         datasets: [{
             data: sorted.map(s=>s[1]),
-            backgroundColor: sorted.map((_,i) => `hsl(${250 - i*20}, 70%, ${55 + i*3}%)`),
+            backgroundColor: sorted.map((_,i) => `hsl(${28 + i*8}, ${55 - i*3}%, ${55 + i*3}%)`),
             borderRadius: 8, borderSkipped: false
         }]
     },
@@ -162,15 +156,15 @@ new Chart(document.getElementById('pkgChart'), {
     }
 });
 
+const optData = [{{ opt_avg.opt1 }},{{ opt_avg.opt2 }},{{ opt_avg.opt3 }},{{ opt_avg.opt4 }},{{ opt_avg.opt5 }},{{ opt_avg.opt6 }},{{ opt_avg.opt7 }},{{ opt_avg.opt8 }},{{ opt_avg.opt9 }},{{ opt_avg.opt10 }}];
+const maxVal = Math.max(...optData);
+const optColors = optData.map(v => v >= maxVal ? '#6B9E5B' : '#C4956A');
+
 new Chart(document.getElementById('optChart'), {
     type: 'bar',
     data: {
         labels: ['Opt 1','Opt 2','Opt 3','Opt 4','Opt 5','Opt 6','Opt 7','Opt 8','Opt 9','Opt 10'],
-        datasets: [{
-            data: [{{ opt_avg.opt1 }},{{ opt_avg.opt2 }},{{ opt_avg.opt3 }},{{ opt_avg.opt4 }},{{ opt_avg.opt5 }},{{ opt_avg.opt6 }},{{ opt_avg.opt7 }},{{ opt_avg.opt8 }},{{ opt_avg.opt9 }},{{ opt_avg.opt10 }}],
-            backgroundColor: [{{ opt_avg.opt3 }}=={{ opt_avg.opt3 }} ? '#00b894' : '#667eea','#667eea','#00b894','#667eea','#667eea','#667eea','#667eea','#667eea','#667eea','#667eea'],
-            borderRadius: 8, borderSkipped: false
-        }]
+        datasets: [{ data: optData, backgroundColor: optColors, borderRadius: 8, borderSkipped: false }]
     },
     options: { plugins: { legend: { display: false } }, scales: { y: { min: 1, max: 5 } } }
 });
