@@ -1,10 +1,3 @@
-"""
-Initialize SQLite Database — Full Version
-===========================================
-โหลดข้อมูล cleaned + clustered เข้าสู่ SQLite database
-พร้อมผลลัพธ์โมเดล Supervised + Unsupervised + Anomaly + Descriptive Stats
-"""
-
 import sqlite3
 import pandas as pd
 import joblib

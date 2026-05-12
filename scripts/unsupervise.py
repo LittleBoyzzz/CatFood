@@ -1,12 +1,3 @@
-"""
-Unsupervised Learning — Cat Food Packaging Survey
-====================================================
-เทคนิค 1: K-Means Clustering (3 กลุ่ม)
-เทคนิค 2: PCA Dimensionality Reduction
-+ Descriptive Statistics, Correlation Analysis
-+ Customer Persona จากผลการจัดกลุ่ม
-"""
-
 import pandas as pd
 import numpy as np
 import matplotlib
@@ -39,21 +30,19 @@ os.makedirs(MODELS_DIR, exist_ok=True)
 DATA_DIR = os.path.join(BASE_DIR, "data")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# ============================================================
-# 1. Load Data
-# ============================================================
+
+# 1. โหลดข้อมูล (โหลดข้อมูล CSV ที่ทำความสะอาดแล้ว)
 print("=" * 60)
-print(" 1. Loading cleaned data")
+print(" 1. กำลังโหลดข้อมูลที่ทำความสะอาดแล้ว")
 print("=" * 60)
 
 df = pd.read_csv(os.path.join(DATA_DIR, "CatFood_cleaned.csv"))
 print(f"   Shape: {df.shape}")
 
-# ============================================================
-# 2. Select Features for Clustering
-# ============================================================
+
+# 2. เลือกฟีเจอร์สำหรับการจัดกลุ่ม (เลือกคุณลักษณะที่เกี่ยวข้องสำหรับ clustering)
 print("\n" + "=" * 60)
-print(" 2. Selecting features for clustering")
+print(" 2. กำลังเลือกฟีเจอร์สำหรับการจัดกลุ่ม")
 print("=" * 60)
 
 factor_cols = [
@@ -71,25 +60,23 @@ feature_cols = factor_cols + pkg_cols + option_want_cols
 df_feat = df[feature_cols].dropna().copy()
 print(f"   Features: {len(feature_cols)} columns, {len(df_feat)} rows")
 
-# Scale
+# ปรับขนาด (ทำให้ข้อมูลอยู่ในมาตราส่วนเดียวกัน)
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(df_feat)
 
-# ============================================================
-# 3. Descriptive Statistics
-# ============================================================
+
+# 3. สถิติเชิงพรรณนา (แสดงค่าเฉลี่ย ค่ามิน ค่าแม็กซ์ เป็นต้น)
 print("\n" + "=" * 60)
-print(" 3. Descriptive Statistics")
+print(" 3. สถิติเชิงพรรณนา")
 print("=" * 60)
 
 desc = df_feat.describe().round(2)
 print(desc.to_string())
 
-# ============================================================
-# 4. Correlation Analysis
-# ============================================================
+
+# 4. การวิเคราะห์ความสัมพันธ์ (หา correlation ระหว่างฟีเจอร์)
 print("\n" + "=" * 60)
-print(" 4. Correlation Analysis")
+print(" 4. การวิเคราะห์ความสัมพันธ์")
 print("=" * 60)
 
 corr = df_feat.corr()
@@ -106,14 +93,13 @@ fig.savefig(path_corr, dpi=150, bbox_inches="tight")
 plt.close()
 print(f"   Saved: {path_corr}")
 
-# ============================================================
-# 5. K-Means Clustering (Technique 1)
-# ============================================================
+
+# 5. K-Means Clustering (เทคนิคที่ 1 - จัดกลุ่มข้อมูลเป็น 3 กลุ่ม)
 print("\n" + "=" * 60)
 print(" 5. K-Means Clustering (k=3)")
 print("=" * 60)
 
-# 5.1 Elbow Method
+# 5.1 วิธี Elbow (หาจำนวน cluster ที่เหมาะสม)
 inertias = []
 sil_scores = []
 K_range = range(2, 8)
@@ -146,7 +132,7 @@ fig.savefig(path_elbow, dpi=150, bbox_inches="tight")
 plt.close()
 print(f"   Saved: {path_elbow}")
 
-# 5.2 Fit K-Means with k=3
+# 5.2 สร้างโมเดล K-Means โดยกำหนด k=3
 kmeans = KMeans(n_clusters=3, random_state=42, n_init=10)
 df_feat["cluster"] = kmeans.fit_predict(X_scaled)
 df["cluster"] = -1
@@ -156,9 +142,8 @@ sil = silhouette_score(X_scaled, df_feat["cluster"])
 print(f"   Silhouette Score (k=3): {sil:.4f}")
 print(f"   Cluster sizes: {df_feat['cluster'].value_counts().sort_index().to_dict()}")
 
-# ============================================================
-# 6. PCA Dimensionality Reduction (Technique 2)
-# ============================================================
+
+# 6. PCA Dimensionality Reduction (เทคนิคที่ 2 - ลดมิติข้อมูลให้เหลือ 2 มิติ)
 print("\n" + "=" * 60)
 print(" 6. PCA Dimensionality Reduction")
 print("=" * 60)
@@ -169,7 +154,7 @@ X_pca = pca.fit_transform(X_scaled)
 print(f"   Explained variance: PC1={pca.explained_variance_ratio_[0]:.4f}, PC2={pca.explained_variance_ratio_[1]:.4f}")
 print(f"   Total: {sum(pca.explained_variance_ratio_):.4f}")
 
-# PCA Scatter Plot
+# กราฟ PCA Scatter (แสดงกลุ่มข้อมูลบน 2 มิติ)
 fig, ax = plt.subplots(figsize=(10, 8))
 colors_map = {0: "#667eea", 1: "#00b894", 2: "#e17055"}
 cluster_names = {0: "Cluster 0", 1: "Cluster 1", 2: "Cluster 2"}
@@ -179,7 +164,7 @@ for c in sorted(df_feat["cluster"].unique()):
     ax.scatter(X_pca[mask, 0], X_pca[mask, 1], c=colors_map[c],
                label=cluster_names[c], s=60, alpha=0.7, edgecolors="white", linewidth=0.5)
 
-# Plot centroids
+# พล็อตจุดกลางของแต่ละกลุ่ม
 centroids_pca = pca.transform(kmeans.cluster_centers_)
 ax.scatter(centroids_pca[:, 0], centroids_pca[:, 1], c="red", marker="X",
            s=200, edgecolors="black", linewidth=2, label="Centroids", zorder=5)
@@ -195,17 +180,16 @@ fig.savefig(path_pca, dpi=150, bbox_inches="tight")
 plt.close()
 print(f"   Saved: {path_pca}")
 
-# ============================================================
-# 7. Cluster Profiling & Customer Persona
-# ============================================================
+
+# 7. การวิเคราะห์โปรไฟล์กลุ่มและบุคลิกลูกค้า (สร้างรูปแบบลูกค้า)
 print("\n" + "=" * 60)
-print(" 7. Cluster Profiling & Customer Persona")
+print(" 7. การวิเคราะห์โปรไฟล์กลุ่มและบุคลิกลูกค้า")
 print("=" * 60)
 
 cluster_profile = df_feat.groupby("cluster")[feature_cols].mean().round(2)
 print(cluster_profile.T.to_string())
 
-# 7.1 Radar Chart per Cluster (Factor + Packaging)
+# 7.1 แผนภูมิ Radar สำหรับแต่ละกลุ่ม (ปัจจัยและบรรจุภัณฑ์)
 radar_cols = factor_cols + pkg_cols
 radar_labels = [
     "Natural", "Imported", "Taste", "Foreign", "Brand Fame",
@@ -235,7 +219,7 @@ fig.savefig(path_radar, dpi=150, bbox_inches="tight")
 plt.close()
 print(f"   Saved: {path_radar}")
 
-# 7.2 Option Want-Buy Scores per Cluster (Grouped Bar)
+# 7.2 คะแนนความต้องการซื้อออปชันตามกลุ่ม (แผนภูมิแท่งเรียง)
 fig, ax = plt.subplots(figsize=(14, 6))
 x = np.arange(10)
 width = 0.25
@@ -258,7 +242,7 @@ fig.savefig(path_opt, dpi=150, bbox_inches="tight")
 plt.close()
 print(f"   Saved: {path_opt}")
 
-# 7.3 Demographics by Cluster
+# 7.3 ข้อมูลประชากรศาสตร์ตามกลุ่ม (อายุ เพศ สถานะการแต่งงาน)
 df_clustered = df[df["cluster"] >= 0].copy()
 
 fig, axes = plt.subplots(1, 3, figsize=(18, 5))
@@ -277,7 +261,7 @@ fig.savefig(path_demo, dpi=150, bbox_inches="tight")
 plt.close()
 print(f"   Saved: {path_demo}")
 
-# 7.4 Cluster Size Distribution
+# 7.4 การกระจายขนาดกลุ่ม (แผนภูมิวงกลม)
 fig, ax = plt.subplots(figsize=(7, 7))
 sizes = df_feat["cluster"].value_counts().sort_index()
 labels_pie = [f"Cluster {i}\n({sizes[i]} persons)" for i in range(3)]
@@ -294,11 +278,10 @@ fig.savefig(path_pie, dpi=150, bbox_inches="tight")
 plt.close()
 print(f"   Saved: {path_pie}")
 
-# ============================================================
-# 8. Build Customer Personas
-# ============================================================
+
+# 8. สร้างบุคลิกลูกค้า (สร้างรูปแบบลูกค้าแต่ละกลุ่ม)
 print("\n" + "=" * 60)
-print(" 8. Customer Personas")
+print(" 8. บุคลิกลูกค้า")
 print("=" * 60)
 
 personas = {}
@@ -306,24 +289,24 @@ for c in range(3):
     cluster_data = df_clustered[df_clustered["cluster"] == c]
     profile = cluster_profile.loc[c]
 
-    # Top factors
+    # ปัจจัยที่สำคัญที่สุด
     factor_scores = profile[factor_cols].sort_values(ascending=False)
     top_factor = factor_scores.index[0].replace("factor_", "").replace("_", " ").title()
 
-    # Top packaging attrs
+    # คุณลักษณะบรรจุภัณฑ์ที่สำคัญที่สุด
     pkg_scores = profile[pkg_cols].sort_values(ascending=False)
     top_pkg = pkg_scores.index[0].replace("pkg_", "").replace("_", " ").title()
 
-    # Top option
+    # ออปชันที่ต้องการซื้อมากที่สุด
     opt_scores = profile[option_want_cols].sort_values(ascending=False)
     top_opt = opt_scores.index[0]
     top_opt_num = top_opt.replace("opt", "").replace("_want_buy", "")
 
-    # Demographics mode
+    # โหมดข้อมูลประชากรศาสตร์ (ค่าที่ปรากฏบ่อยที่สุด)
     top_age = cluster_data["age"].mode().iloc[0] if len(cluster_data["age"].mode()) > 0 else "N/A"
     top_gender = cluster_data["gender"].mode().iloc[0] if len(cluster_data["gender"].mode()) > 0 else "N/A"
 
-    # Overall avg score level
+    # ระดับคะแนนเฉลี่ยโดยรวม
     avg_all = profile[factor_cols + pkg_cols].mean()
 
     if avg_all >= 4.0:
@@ -358,22 +341,20 @@ for c in range(3):
     print(f"   Preferred Design: Option {top_opt_num}")
     print(f"   Demographics: {top_age}, {top_gender}")
 
-# ============================================================
-# 9. Save Results
-# ============================================================
+
+# 9. บันทึกผลลัพธ์ (บันทึกข้อมูลที่จัดกลุ่มแล้ว)
 print("\n" + "=" * 60)
-print(" 9. Saving results")
+print(" 9. กำลังบันทึกผลลัพธ์")
 print("=" * 60)
 
-# Save clustered data
+# บันทึกข้อมูลที่จัดกลุ่มแล้ว
 df_clustered.to_csv(os.path.join(DATA_DIR, "CatFood_clustered.csv"), index=False, encoding="utf-8-sig")
 print("   Saved: data/CatFood_clustered.csv")
 
-# ============================================================
-# 10. Anomaly Detection (Isolation Forest)
-# ============================================================
+
+# 10. การตรวจจับความผิดปกติ (หาข้อมูลที่ผิดปกติ)
 print("\n" + "=" * 60)
-print(" 10. Anomaly Detection (Isolation Forest)")
+print(" 10. การตรวจจับความผิดปกติ (Isolation Forest)")
 print("=" * 60)
 
 iso_forest = IsolationForest(n_estimators=100, contamination=0.08, random_state=42)
@@ -384,10 +365,10 @@ n_anomalies = (anomaly_labels == -1).sum()
 n_normal = (anomaly_labels == 1).sum()
 print(f"   Normal: {n_normal}, Anomaly: {n_anomalies} ({n_anomalies/len(anomaly_labels)*100:.1f}%)")
 
-# Anomaly Visualization on PCA
+# แสดงผลความผิดปกติบน PCA (วาด scatter และ histogram)
 fig, axes = plt.subplots(1, 2, figsize=(16, 6))
 
-# 10.1 PCA scatter with anomalies
+# 10.1 กราฟ PCA Scatter แสดงความผิดปกติ
 ax1 = axes[0]
 normal_mask = anomaly_labels == 1
 ax1.scatter(X_pca[normal_mask, 0], X_pca[normal_mask, 1], c="#667eea", s=40, alpha=0.6, label=f"Normal ({n_normal})")
@@ -398,7 +379,7 @@ ax1.set_title("Anomaly Detection (Isolation Forest)", fontweight="bold")
 ax1.legend()
 ax1.grid(alpha=0.3)
 
-# 10.2 Anomaly score distribution
+# 10.2 การกระจายคะแนนความผิดปกติ
 ax2 = axes[1]
 ax2.hist(anomaly_scores[normal_mask], bins=30, alpha=0.7, color="#667eea", label="Normal", edgecolor="white")
 ax2.hist(anomaly_scores[~normal_mask], bins=15, alpha=0.7, color="#ff6b6b", label="Anomaly", edgecolor="white")
@@ -415,11 +396,10 @@ fig.savefig(path_anomaly, dpi=150, bbox_inches="tight")
 plt.close()
 print(f"   Saved: {path_anomaly}")
 
-# ============================================================
-# 11. Save Results
-# ============================================================
+
+# 11. บันทึกผลลัพธ์ทั้งหมด (บันทึกโมเดลและข้อมูล)
 print("\n" + "=" * 60)
-print(" 11. Saving all results")
+print(" 11. กำลังบันทึกผลลัพธ์ทั้งหมด")
 print("=" * 60)
 
 joblib.dump({
@@ -436,13 +416,12 @@ joblib.dump({
 print("   Saved: output/unsup_model.pkl")
 
 print("\n" + "=" * 60)
-print(" SUMMARY")
+print(" สรุปผลลัพธ์")
 print("=" * 60)
-print(f"   Techniques: K-Means + PCA + Isolation Forest")
-print(f"   Clusters: 3, Silhouette: {sil:.4f}")
-print(f"   PCA Explained: {sum(pca.explained_variance_ratio_)*100:.1f}%")
-print(f"   Anomalies: {n_anomalies} ({n_anomalies/len(anomaly_labels)*100:.1f}%)")
-print(f"   Charts: unsup_1 ~ unsup_8")
+print(f"   เทคนิค: K-Means + PCA + Isolation Forest")
+print(f"   จำนวนกลุ่ม: 3, Silhouette: {sil:.4f}")
+print(f"   PCA อธิบายความแปรปรวน: {sum(pca.explained_variance_ratio_)*100:.1f}%")
+print(f"   ข้อมูลผิดปกติ: {n_anomalies} ({n_anomalies/len(anomaly_labels)*100:.1f}%)") 
+print(f"   กราฟ: unsup_1 ~ unsup_8")
 print("=" * 60)
-print(" DONE!")
-print("=" * 60)
+print(" เสร็จสิ้น")

@@ -1,13 +1,3 @@
-"""
-Train Favorite Option Predictor
-=================================
-Target : option ที่ได้คะแนน want_buy สูงสุด (1–10)
-         → Multi-class classification (10 classes)
-Features: factor_*, pkg_*, demographics
-Model  : RandomForest (best for multi-class imbalanced)
-Output : output/option_model.pkl
-"""
-
 import pandas as pd
 import numpy as np
 import joblib

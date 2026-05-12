@@ -36,9 +36,8 @@ from sklearn.metrics import (
 
 warnings.filterwarnings("ignore")
 
-# ============================================================
+
 # ตั้งค่า Font สำหรับภาษาไทย (fallback ถ้าไม่มี)
-# ============================================================
 matplotlib.rcParams["font.family"] = "sans-serif"
 matplotlib.rcParams["axes.unicode_minus"] = False
 
@@ -54,9 +53,8 @@ MODELS_DIR = os.path.join(BASE_DIR, "models")
 os.makedirs(MODELS_DIR, exist_ok=True)
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# ============================================================
+
 # 1. โหลดข้อมูลที่ทำความสะอาดแล้ว
-# ============================================================
 print("=" * 65)
 print(" 1. Loading cleaned data")
 print("=" * 65)
@@ -64,9 +62,8 @@ print("=" * 65)
 df = pd.read_csv(os.path.join(BASE_DIR, "data", "CatFood_cleaned.csv"))
 print(f"   Data shape: {df.shape}")
 
-# ============================================================
+
 # 2. กำหนด Target & Features
-# ============================================================
 print("\n" + "=" * 65)
 print(" 2. Defining Target & Features")
 print("=" * 65)
@@ -99,9 +96,8 @@ demo_cols = ["age", "gender", "marital_status"]
 feature_cols = factor_cols + pkg_cols + option_cols + demo_cols
 print(f"   Total features: {len(feature_cols)}")
 
-# ============================================================
+
 # 3. เตรียมข้อมูล (Encoding & Splitting)
-# ============================================================
 print("\n" + "=" * 65)
 print(" 3. Preparing data")
 print("=" * 65)
@@ -135,9 +131,8 @@ scaler = StandardScaler()
 X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled = scaler.transform(X_test)
 
-# ============================================================
+
 # 4. Train 3 Models
-# ============================================================
 print("\n" + "=" * 65)
 print(" 4. Training Models")
 print("=" * 65)
@@ -195,9 +190,8 @@ for name, model in models.items():
     print(f"   F1-Score:    {f1:.4f}")
     print(f"   CV Accuracy: {cv_mean:.4f} (+/- {cv_scores.std():.4f})")
 
-# ============================================================
+
 # 5. เปรียบเทียบและเลือก Best Model
-# ============================================================
 print("\n" + "=" * 65)
 print(" 5. Model Comparison & Best Model Selection")
 print("=" * 65)
@@ -231,16 +225,14 @@ joblib.dump({
 }, pkl_path)
 print(f"   Saved: {pkl_path}")
 
-# ============================================================
+
 # 6. Visualizations — บันทึกเป็น PNG ทั้งหมด
-# ============================================================
 print("\n" + "=" * 65)
 print(" 6. Creating Visualizations")
 print("=" * 65)
 
-# ──────────────────────────────────────────────
+
 # 6.1 Model Performance Comparison (Bar Chart)
-# ──────────────────────────────────────────────
 fig, ax = plt.subplots(figsize=(12, 6))
 metrics = ["Accuracy", "Precision", "Recall", "F1-Score", "CV Accuracy"]
 x = np.arange(len(metrics))
@@ -268,9 +260,8 @@ fig.savefig(path1, dpi=150, bbox_inches="tight")
 plt.close()
 print(f"   Saved: {path1}")
 
-# ──────────────────────────────────────────────
+
 # 6.2 Confusion Matrices (3 models side-by-side)
-# ──────────────────────────────────────────────
 fig, axes = plt.subplots(1, 3, figsize=(16, 5))
 for idx, (name, r) in enumerate(results.items()):
     cm = confusion_matrix(y_test, r["y_pred"])
@@ -288,9 +279,8 @@ fig.savefig(path2, dpi=150, bbox_inches="tight")
 plt.close()
 print(f"   Saved: {path2}")
 
-# ──────────────────────────────────────────────
+
 # 6.3 ROC Curves (all 3 models on one plot)
-# ──────────────────────────────────────────────
 fig, ax = plt.subplots(figsize=(8, 6))
 for name, r, color in zip(results.keys(), results.values(), colors):
     fpr, tpr, _ = roc_curve(y_test, r["y_proba"])
@@ -309,9 +299,8 @@ fig.savefig(path3, dpi=150, bbox_inches="tight")
 plt.close()
 print(f"   Saved: {path3}")
 
-# ──────────────────────────────────────────────
+
 # 6.4 Feature Importance (Top 15 from RandomForest)
-# ──────────────────────────────────────────────
 rf_model = results["RandomForest"]["model"]
 importances = rf_model.feature_importances_
 feat_imp = pd.Series(importances, index=X.columns).sort_values(ascending=False).head(15)
@@ -335,9 +324,8 @@ fig.savefig(path4, dpi=150, bbox_inches="tight")
 plt.close()
 print(f"   Saved: {path4}")
 
-# ──────────────────────────────────────────────
+
 # 6.5 Decision Tree Visualization
-# ──────────────────────────────────────────────
 dt_model = results["DecisionTree"]["model"]
 fig, ax = plt.subplots(figsize=(24, 10))
 plot_tree(
@@ -357,9 +345,8 @@ fig.savefig(path5, dpi=150, bbox_inches="tight")
 plt.close()
 print(f"   Saved: {path5}")
 
-# ──────────────────────────────────────────────
+
 # 6.6 Cross-Validation Scores Comparison (Box Plot)
-# ──────────────────────────────────────────────
 fig, ax = plt.subplots(figsize=(8, 6))
 cv_data = {}
 for name, model_obj in models.items():
@@ -388,9 +375,8 @@ fig.savefig(path6, dpi=150, bbox_inches="tight")
 plt.close()
 print(f"   Saved: {path6}")
 
-# ──────────────────────────────────────────────
+
 # 6.7 Classification Report Heatmap (Best Model)
-# ──────────────────────────────────────────────
 best_r = results[best_name]
 report = classification_report(y_test, best_r["y_pred"], output_dict=True, zero_division=0)
 report_df = pd.DataFrame(report).iloc[:3, :2].T  # precision, recall, f1 for classes 0 and 1
@@ -408,9 +394,8 @@ fig.savefig(path7, dpi=150, bbox_inches="tight")
 plt.close()
 print(f"   Saved: {path7}")
 
-# ──────────────────────────────────────────────
+
 # 6.8 Target Distribution (Pie Chart)
-# ──────────────────────────────────────────────
 fig, ax = plt.subplots(figsize=(7, 7))
 target_counts = y.value_counts()
 labels = ["Effect (1)", "No Effect (0)"]
@@ -426,9 +411,8 @@ fig.savefig(path8, dpi=150, bbox_inches="tight")
 plt.close()
 print(f"   Saved: {path8}")
 
-# ============================================================
+
 # 7. สรุปผลลัพธ์
-# ============================================================
 print("\n" + "=" * 65)
 print(" SUMMARY")
 print("=" * 65)

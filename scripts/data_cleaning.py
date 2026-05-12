@@ -1,15 +1,3 @@
-"""
-Data Cleaning Script for CatFood.csv
-=====================================
-แบบสำรวจความคิดเห็นเกี่ยวกับบรรจุภัณฑ์อาหารแมวสำเร็จรูปชนิดเม็ด
-- ลบแถว Brief/คำอธิบาย (4 แถวแรก) และ git merge conflict markers
-- ตั้งชื่อคอลัมน์ให้สั้นกระชับ
-- ลบแถวว่าง และแถวที่ถูกคัดกรองออก (ไม่เคยซื้ออาหารแมว)
-- แปลง Likert scale เป็นตัวเลข
-- แปลงคอลัมน์อายุเป็นตัวเลข
-- บันทึกไฟล์ที่ทำความสะอาดแล้ว
-"""
-
 import pandas as pd
 import numpy as np
 import os
@@ -22,9 +10,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 os.makedirs(DATA_DIR, exist_ok=True)
 
-# ============================================================
+
 # 1. อ่านไฟล์ CSV - ข้ามแถว Brief (4 แถวแรก)
-# ============================================================
 print("=" * 60)
 print("1. กำลังอ่านไฟล์ CatFood.csv ...")
 print("=" * 60)
@@ -41,9 +28,8 @@ raw_df = pd.read_csv(
 
 print(f"   ขนาดข้อมูลดิบ: {raw_df.shape[0]} แถว x {raw_df.shape[1]} คอลัมน์")
 
-# ============================================================
+
 # 2. ตั้งชื่อคอลัมน์ใหม่ให้สั้นกระชับ
-# ============================================================
 print("\n" + "=" * 60)
 print("2. ตั้งชื่อคอลัมน์ใหม่ ...")
 print("=" * 60)
@@ -85,15 +71,14 @@ new_columns.extend(["top3_choices", "age", "gender", "marital_status"])
 
 # ตรวจสอบจำนวนคอลัมน์ตรงกัน
 if len(new_columns) != raw_df.shape[1]:
-    print(f"   ⚠️ จำนวนคอลัมน์ไม่ตรง: ตั้งชื่อ {len(new_columns)} vs ข้อมูล {raw_df.shape[1]}")
+    print(f"    จำนวนคอลัมน์ไม่ตรง: ตั้งชื่อ {len(new_columns)} vs ข้อมูล {raw_df.shape[1]}")
     print(f"   ใช้ชื่อคอลัมน์เดิมแทน")
 else:
     raw_df.columns = new_columns
-    print(f"   ✅ ตั้งชื่อคอลัมน์ใหม่สำเร็จ ({len(new_columns)} คอลัมน์)")
+    print(f"    ตั้งชื่อคอลัมน์ใหม่สำเร็จ ({len(new_columns)} คอลัมน์)")
 
-# ============================================================
+
 # 3. ลบแถวว่าง + แถวที่มี git merge conflict
-# ============================================================
 print("\n" + "=" * 60)
 print("3. ลบแถวว่างและ git merge conflict ...")
 print("=" * 60)
@@ -114,9 +99,8 @@ after_count = len(raw_df)
 print(f"   ลบแถวว่าง/conflict: {before_count - after_count} แถว")
 print(f"   เหลือ: {after_count} แถว")
 
-# ============================================================
+
 # 4. ลบแถวที่ถูกคัดกรองออก (ไม่เคยซื้ออาหารแมว)
-# ============================================================
 print("\n" + "=" * 60)
 print("4. ลบแถวผู้ตอบที่ไม่เคยซื้ออาหารแมว ...")
 print("=" * 60)
@@ -131,9 +115,8 @@ after_count = len(raw_df)
 print(f"   ลบผู้ตอบที่ไม่เคยซื้อ: {before_count - after_count} คน")
 print(f"   เหลือผู้ตอบที่ผ่านคัดกรอง: {after_count} คน")
 
-# ============================================================
+
 # 5. แปลง Likert scale เป็นตัวเลข
-# ============================================================
 print("\n" + "=" * 60)
 print("5. แปลง Likert scale เป็นตัวเลข ...")
 print("=" * 60)
@@ -159,7 +142,7 @@ for col in importance_cols:
     if col in raw_df.columns:
         raw_df[col] = raw_df[col].map(importance_map)
 
-print(f"   ✅ แปลง Importance scale ({len(importance_cols)} คอลัมน์)")
+print(f"   แปลง Importance scale ({len(importance_cols)} คอลัมน์)")
 
 # 5.2 Agreement scale (5 ระดับ) — ใช้กับคอลัมน์ opt*
 agreement_map = {
@@ -176,18 +159,17 @@ for col in option_cols:
     if col in raw_df.columns:
         raw_df[col] = raw_df[col].map(agreement_map)
 
-print(f"   ✅ แปลง Agreement scale ({len(option_cols)} คอลัมน์)")
+print(f"   แปลง Agreement scale ({len(option_cols)} คอลัมน์)")
 
 # 5.3 packaging_influence (มีผล/ไม่มีผล) → 1/0
 raw_df["packaging_influence"] = raw_df["packaging_influence"].map({
     "มีผล": 1,
     "ไม่มีผล": 0,
 })
-print("   ✅ แปลง packaging_influence เป็น 1/0")
+print("   แปลง packaging_influence เป็น 1/0")
 
-# ============================================================
-# 6. แปลงคอลัมน์อายุเป็นตัวเลข (ค่ากลาง)
-# ============================================================
+
+# 6. แปลงคอลัมน์อายุเป็นตัวเลข 
 print("\n" + "=" * 60)
 print("6. แปลงช่วงอายุ ...")
 print("=" * 60)
@@ -201,12 +183,11 @@ age_map = {
 }
 raw_df["age"] = raw_df["age"].map(age_map)
 
-print("   ✅ ทำความสะอาดช่วงอายุ")
+print("   ทำความสะอาดช่วงอายุ")
 print(f"   การกระจาย:\n{raw_df['age'].value_counts().to_string()}")
 
-# ============================================================
+
 # 7. ทำความสะอาด text columns (ตัดช่องว่างหัว-ท้าย)
-# ============================================================
 print("\n" + "=" * 60)
 print("7. ทำความสะอาดคอลัมน์ข้อความ ...")
 print("=" * 60)
@@ -222,24 +203,22 @@ for col in text_cols:
         raw_df[col] = raw_df[col].astype(str).str.strip()
         raw_df[col] = raw_df[col].replace({"nan": np.nan, "None": np.nan, "": np.nan, "-": np.nan})
 
-print(f"   ✅ ทำความสะอาด {len(text_cols)} คอลัมน์ข้อความ")
+print(f"   ทำความสะอาด {len(text_cols)} คอลัมน์ข้อความ")
 
-# ============================================================
+
 # 8. ลบคอลัมน์ที่ไม่จำเป็น (experience ซ้ำ เพราะกรองเหลือ 'เคย' แล้ว)
-# ============================================================
 print("\n" + "=" * 60)
 print("8. จัดการคอลัมน์สุดท้าย ...")
 print("=" * 60)
 
 raw_df = raw_df.drop(columns=["experience"])
-print("   ✅ ลบคอลัมน์ 'experience' (ทุกแถวเป็น 'เคย' แล้ว)")
+print("   ลบคอลัมน์ 'experience' (ทุกแถวเป็น 'เคย' แล้ว)")
 
-# Reset index
+
 raw_df = raw_df.reset_index(drop=True)
 
-# ============================================================
+
 # 9. ตรวจสอบ Missing Values
-# ============================================================
 print("\n" + "=" * 60)
 print("9. สรุป Missing Values ...")
 print("=" * 60)
@@ -254,21 +233,20 @@ missing_summary = pd.DataFrame({
 if len(missing_summary) > 0:
     print(missing_summary.to_string())
 else:
-    print("   ✅ ไม่มี Missing Values!")
+    print("  ไม่มี Missing Values!")
 
-# ============================================================
+
 # 10. สรุปและบันทึกไฟล์
-# ============================================================
 print("\n" + "=" * 60)
 print("10. สรุปข้อมูลหลังทำความสะอาด")
 print("=" * 60)
 
-print(f"\n   📊 ขนาดข้อมูลสุดท้าย: {raw_df.shape[0]} แถว x {raw_df.shape[1]} คอลัมน์")
-print(f"   📋 ประเภทข้อมูล:")
+print(f"\n   ขนาดข้อมูลสุดท้าย: {raw_df.shape[0]} แถว x {raw_df.shape[1]} คอลัมน์")
+print(f"   ประเภทข้อมูล:")
 print(f"      - ตัวเลข (numeric): {raw_df.select_dtypes(include=[np.number]).shape[1]} คอลัมน์")
 print(f"      - ข้อความ (object): {raw_df.select_dtypes(include=['object']).shape[1]} คอลัมน์")
 
-print(f"\n   📋 คอลัมน์ทั้งหมด:")
+print(f"\n  คอลัมน์ทั้งหมด:")
 for i, col in enumerate(raw_df.columns, 1):
     dtype = raw_df[col].dtype
     print(f"      {i:2d}. {col:<25s} ({dtype})")
@@ -276,7 +254,7 @@ for i, col in enumerate(raw_df.columns, 1):
 # บันทึกไฟล์
 output_path = os.path.join(DATA_DIR, "CatFood_cleaned.csv")
 raw_df.to_csv(output_path, index=False, encoding="utf-8-sig")
-print(f"\n   ✅ บันทึกไฟล์: {output_path}")
+print(f"\n   บันทึกไฟล์: {output_path}")
 
 # บันทึกสรุป
 print("\n" + "=" * 60)
