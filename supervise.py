@@ -45,7 +45,7 @@ except:
     pass
 
 # สร้างโฟลเดอร์เก็บผลลัพธ์
-OUTPUT_DIR = r"d:\Work\Final\output"
+OUTPUT_DIR = r"CatFood/output"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # ============================================================
@@ -55,7 +55,7 @@ print("=" * 65)
 print(" 1. Loading cleaned data")
 print("=" * 65)
 
-df = pd.read_csv(r"d:\Work\Final\data\CatFood_cleaned.csv")
+df = pd.read_csv("CatFood/data/CatFood_cleaned.csv")
 print(f"   Data shape: {df.shape}")
 
 # ============================================================

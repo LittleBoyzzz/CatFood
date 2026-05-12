@@ -26,7 +26,7 @@ warnings.filterwarnings("ignore")
 matplotlib.rcParams["font.family"] = "sans-serif"
 matplotlib.rcParams["axes.unicode_minus"] = False
 
-OUTPUT_DIR = r"d:\Work\Final\output"
+OUTPUT_DIR = r"CatFood/output"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # ============================================================
@@ -36,7 +36,7 @@ print("=" * 60)
 print(" 1. Loading cleaned data")
 print("=" * 60)
 
-df = pd.read_csv(r"d:\Work\Final\data\CatFood_cleaned.csv")
+df = pd.read_csv(r"CatFood/data/CatFood_cleaned.csv")
 print(f"   Shape: {df.shape}")
 
 # ============================================================
@@ -318,13 +318,13 @@ for c in range(3):
 
     if avg_all >= 4.0:
         engagement = "High Engagement"
-        desc = "Premium-focused, highly engaged buyers who care deeply about packaging quality"
+        desc = "กลุ่มผู้บริโภคที่ใส่ใจในคุณภาพของบรรจุภัณฑ์เป็นอย่างมาก และมักมองหาผลิตภัณฑ์พรีเมียม"
     elif avg_all >= 3.0:
         engagement = "Moderate Engagement"
-        desc = "Balanced buyers who consider multiple factors with moderate expectations"
+        desc = "กลุ่มผู้ซื้อที่เน้นความสมดุล ซึ่งพิจารณาปัจจัยหลายด้านควบคู่กันไป และมีความคาดหวังในระดับปานกลาง"
     else:
         engagement = "Low Engagement"
-        desc = "Price-conscious, minimal packaging interest, practical buyers"
+        desc = "กลุ่มผู้บริโภคที่คำนึงถึงราคาเป็นหลัก และให้ความสำคัญกับบรรจุภัณฑ์น้อยที่สุด โดยเน้นที่การใช้งานจริงเป็นหลัก"
 
     personas[c] = {
         "name": f"Cluster {c} — {engagement}",
