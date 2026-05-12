@@ -3,83 +3,158 @@
 
 {% block extra_css %}
 <style>
-/* ── Team Member Cards ── */
-.team-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-    margin-bottom: 32px;
-}
-.team-card {
-    background: #fff;
-    border: 1px solid rgba(160,120,90,.1);
-    border-radius: 20px;
-    padding: 32px 24px;
-    text-align: center;
-    transition: transform .25s, box-shadow .25s;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(160,120,90,.06);
-}
-.team-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 4px;
-    border-radius: 20px 20px 0 0;
-}
-.team-card:nth-child(1)::before { background: linear-gradient(90deg, #A0785A, #C4956A); }
-.team-card:nth-child(2)::before { background: linear-gradient(90deg, #6B9E5B, #81AA77); }
-.team-card:nth-child(3)::before { background: linear-gradient(90deg, #D4A46A, #C88C64); }
-.team-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 40px rgba(160,120,90,.15);
-}
-.team-avatar {
-    width: 72px; height: 72px;
-    border-radius: 50%;
-    margin: 0 auto 16px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.6rem; font-weight: 900; color: #fff;
-    letter-spacing: -1px;
-}
-.team-card:nth-child(1) .team-avatar { background: linear-gradient(135deg, #A0785A, #C4956A); }
-.team-card:nth-child(2) .team-avatar { background: linear-gradient(135deg, #6B9E5B, #81AA77); }
-.team-card:nth-child(3) .team-avatar { background: linear-gradient(135deg, #D4A46A, #C88C64); }
-.team-name {
-    font-size: 1.05rem;
-    font-weight: 800;
-    color: #4E342E;
-    margin: 0 0 6px;
-    line-height: 1.3;
-}
-.team-role {
-    font-size: .78rem;
-    color: #A1887F;
-    margin: 0 0 14px;
-    line-height: 1.7;
-    min-height: 48px;
-}
-.team-tag {
-    display: inline-block;
-    padding: 4px 14px;
-    border-radius: 50px;
-    font-size: .68rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .8px;
-}
-.team-card:nth-child(1) .team-tag { background: rgba(160,120,90,.12); color: #A0785A; }
-.team-card:nth-child(2) .team-tag { background: rgba(107,158,91,.12); color: #6B9E5B; }
-.team-card:nth-child(3) .team-tag { background: rgba(212,164,106,.12); color: #D4A46A; }
+    /* ── Team Member Cards ── */
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 20px;
+        margin-bottom: 32px;
+    }
 
-/* ── Descriptive Stats ── */
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; margin-bottom: 24px; }
-.stat-table { width: 100%; border-collapse: collapse; font-size: .78rem; }
-.stat-table th { background: rgba(196,149,106,.08); padding: 8px 10px; text-align: left; color: #8D6E63; font-size: .7rem; text-transform: uppercase; letter-spacing: .5px; }
-.stat-table td { padding: 7px 10px; border-top: 1px solid rgba(160,120,90,.06); color: #5D4037; }
-.stat-table tr:hover td { background: rgba(196,149,106,.05); }
-.stat-label { color: #A0785A; font-weight: 600; }
+    .team-card {
+        background: #fff;
+        border: 1px solid rgba(160, 120, 90, .1);
+        border-radius: 20px;
+        padding: 32px 24px;
+        text-align: center;
+        transition: transform .25s, box-shadow .25s;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 2px 12px rgba(160, 120, 90, .06);
+    }
+
+    .team-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .team-card:nth-child(1)::before {
+        background: linear-gradient(90deg, #A0785A, #C4956A);
+    }
+
+    .team-card:nth-child(2)::before {
+        background: linear-gradient(90deg, #6B9E5B, #81AA77);
+    }
+
+    .team-card:nth-child(3)::before {
+        background: linear-gradient(90deg, #D4A46A, #C88C64);
+    }
+
+    .team-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 40px rgba(160, 120, 90, .15);
+    }
+
+    .team-avatar {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        margin: 0 auto 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.6rem;
+        font-weight: 900;
+        color: #fff;
+        letter-spacing: -1px;
+    }
+
+    .team-card:nth-child(1) .team-avatar {
+        background: linear-gradient(135deg, #A0785A, #C4956A);
+    }
+
+    .team-card:nth-child(2) .team-avatar {
+        background: linear-gradient(135deg, #6B9E5B, #81AA77);
+    }
+
+    .team-card:nth-child(3) .team-avatar {
+        background: linear-gradient(135deg, #D4A46A, #C88C64);
+    }
+
+    .team-name {
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: #4E342E;
+        margin: 0 0 6px;
+        line-height: 1.3;
+    }
+
+    .team-role {
+        font-size: .78rem;
+        color: #A1887F;
+        margin: 0 0 14px;
+        line-height: 1.7;
+        min-height: 48px;
+    }
+
+    .team-tag {
+        display: inline-block;
+        padding: 4px 14px;
+        border-radius: 50px;
+        font-size: .68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .8px;
+    }
+
+    .team-card:nth-child(1) .team-tag {
+        background: rgba(160, 120, 90, .12);
+        color: #A0785A;
+    }
+
+    .team-card:nth-child(2) .team-tag {
+        background: rgba(107, 158, 91, .12);
+        color: #6B9E5B;
+    }
+
+    .team-card:nth-child(3) .team-tag {
+        background: rgba(212, 164, 106, .12);
+        color: #D4A46A;
+    }
+
+    /* ── Descriptive Stats ── */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .stat-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: .78rem;
+    }
+
+    .stat-table th {
+        background: rgba(196, 149, 106, .08);
+        padding: 8px 10px;
+        text-align: left;
+        color: #8D6E63;
+        font-size: .7rem;
+        text-transform: uppercase;
+        letter-spacing: .5px;
+    }
+
+    .stat-table td {
+        padding: 7px 10px;
+        border-top: 1px solid rgba(160, 120, 90, .06);
+        color: #5D4037;
+    }
+
+    .stat-table tr:hover td {
+        background: rgba(196, 149, 106, .05);
+    }
+
+    .stat-label {
+        color: #A0785A;
+        font-weight: 600;
+    }
 </style>
 {% endblock %}
 
@@ -123,7 +198,8 @@
             <div class="hero-stat">
                 <span class="hs-icon">🎯</span>
                 <div>
-                    <div class="hs-val"><span class="count-up" data-target="{{ (best.accuracy * 100)|round(1) }}" data-decimals="1">0</span>%</div>
+                    <div class="hs-val"><span class="count-up" data-target="{{ (best.accuracy * 100)|round(1) }}"
+                            data-decimals="1">0</span>%</div>
                     <div class="hs-lbl">ความแม่นยำ</div>
                 </div>
             </div>
@@ -137,7 +213,8 @@
             <div class="hero-stat">
                 <span class="hs-icon">📈</span>
                 <div>
-                    <div class="hs-val">AUC <span class="count-up" data-target="{{ (best.roc_auc * 1000)|round|int }}" data-divisor="1000" data-decimals="3">0</span></div>
+                    <div class="hs-val">AUC <span class="count-up" data-target="{{ (best.roc_auc * 1000)|round|int }}"
+                            data-divisor="1000" data-decimals="3">0</span></div>
                     <div class="hs-lbl">คะแนน ROC</div>
                 </div>
             </div>
@@ -146,20 +223,34 @@
 </div>
 
 <!-- ── Descriptive Statistics ── -->
-<h2 class="section-title"><i class="fas fa-chart-bar" style="color:#C4956A"></i> สถิติเชิงพรรณนา (Descriptive Statistics)</h2>
+<h2 class="section-title"><i class="fas fa-chart-bar" style="color:#C4956A"></i> สถิติเชิงพรรณนา (Descriptive
+    Statistics)</h2>
 
 <div class="stats-grid">
     <div class="box">
         <h3><i class="fas fa-balance-scale" style="color:#A0785A"></i> ปัจจัยที่ส่งผลต่อการซื้อ</h3>
         <table class="stat-table">
-            <thead><tr><th>ตัวแปร</th><th>ค่าเฉลี่ย</th><th>SD</th><th>Min</th><th>Median</th><th>Max</th></tr></thead>
+            <thead>
+                <tr>
+                    <th>ตัวแปร</th>
+                    <th>ค่าเฉลี่ย</th>
+                    <th>SD</th>
+                    <th>Min</th>
+                    <th>Median</th>
+                    <th>Max</th>
+                </tr>
+            </thead>
             <tbody>
-            {% for d in desc_factor %}
-            <tr>
-                <td class="stat-label">{{ d.column_name.replace('factor_','').replace('_',' ').title() }}</td>
-                <td>{{ d.mean }}</td><td>{{ d.std }}</td><td>{{ d.min_val }}</td><td>{{ d.median }}</td><td>{{ d.max_val }}</td>
-            </tr>
-            {% endfor %}
+                {% for d in desc_factor %}
+                <tr>
+                    <td class="stat-label">{{ d.column_name.replace('factor_','').replace('_',' ').title() }}</td>
+                    <td>{{ d.mean }}</td>
+                    <td>{{ d.std }}</td>
+                    <td>{{ d.min_val }}</td>
+                    <td>{{ d.median }}</td>
+                    <td>{{ d.max_val }}</td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
@@ -167,14 +258,27 @@
     <div class="box">
         <h3><i class="fas fa-box" style="color:#6B9E5B"></i> คุณสมบัติบรรจุภัณฑ์</h3>
         <table class="stat-table">
-            <thead><tr><th>ตัวแปร</th><th>ค่าเฉลี่ย</th><th>SD</th><th>Min</th><th>Median</th><th>Max</th></tr></thead>
+            <thead>
+                <tr>
+                    <th>ตัวแปร</th>
+                    <th>ค่าเฉลี่ย</th>
+                    <th>SD</th>
+                    <th>Min</th>
+                    <th>Median</th>
+                    <th>Max</th>
+                </tr>
+            </thead>
             <tbody>
-            {% for d in desc_pkg %}
-            <tr>
-                <td class="stat-label">{{ d.column_name.replace('pkg_','').replace('_',' ').title() }}</td>
-                <td>{{ d.mean }}</td><td>{{ d.std }}</td><td>{{ d.min_val }}</td><td>{{ d.median }}</td><td>{{ d.max_val }}</td>
-            </tr>
-            {% endfor %}
+                {% for d in desc_pkg %}
+                <tr>
+                    <td class="stat-label">{{ d.column_name.replace('pkg_','').replace('_',' ').title() }}</td>
+                    <td>{{ d.mean }}</td>
+                    <td>{{ d.std }}</td>
+                    <td>{{ d.min_val }}</td>
+                    <td>{{ d.median }}</td>
+                    <td>{{ d.max_val }}</td>
+                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
@@ -183,15 +287,30 @@
 <div class="box" style="margin-bottom:24px">
     <h3><i class="fas fa-palette" style="color:#C88C64"></i> คะแนนความต้องการซื้อ (Want-to-Buy) — ทุก Option</h3>
     <table class="stat-table">
-        <thead><tr><th>ตัวเลือก</th><th>ค่าเฉลี่ย</th><th>SD</th><th>Min</th><th>Median</th><th>Max</th><th>จำนวน</th></tr></thead>
+        <thead>
+            <tr>
+                <th>ตัวเลือก</th>
+                <th>ค่าเฉลี่ย</th>
+                <th>SD</th>
+                <th>Min</th>
+                <th>Median</th>
+                <th>Max</th>
+                <th>จำนวน</th>
+            </tr>
+        </thead>
         <tbody>
-        {% for d in desc_opt %}
-        <tr style="{{ 'background:rgba(107,158,91,.08)' if loop.index == 1 else '' }}">
-            <td class="stat-label">{{ d.column_name.replace('opt','Option ').replace('_want_buy','') }}{% if loop.index == 1 %} 🏆{% endif %}</td>
-            <td style="{{ 'color:#6B9E5B;font-weight:700' if loop.index == 1 else '' }}">{{ d.mean }}</td>
-            <td>{{ d.std }}</td><td>{{ d.min_val }}</td><td>{{ d.median }}</td><td>{{ d.max_val }}</td><td>{{ d.count }}</td>
-        </tr>
-        {% endfor %}
+            {% for d in desc_opt %}
+            <tr style="{{ 'background:rgba(107,158,91,.08)' if loop.index == 1 else '' }}">
+                <td class="stat-label">{{ d.column_name.replace('opt','Option ').replace('_want_buy','') }}{% if
+                    loop.index == 1 %} 🏆{% endif %}</td>
+                <td style="{{ 'color:#6B9E5B;font-weight:700' if loop.index == 1 else '' }}">{{ d.mean }}</td>
+                <td>{{ d.std }}</td>
+                <td>{{ d.min_val }}</td>
+                <td>{{ d.median }}</td>
+                <td>{{ d.max_val }}</td>
+                <td>{{ d.count }}</td>
+            </tr>
+            {% endfor %}
         </tbody>
     </table>
 </div>
@@ -229,19 +348,19 @@
     <div class="team-card">
         <div class="team-avatar">👤</div>
         <h1 class="team-name">มนัสวิน ชั้นศิริโสภณ</h1>
-        <h2 class="team-role">รายละเอียดงานที่รับผิดชอบ</h2>
+        <h2 class="team-role">Backend & Machine learning</h2>
         <span class="team-tag">Student ID: 1660900992</span>
     </div>
     <div class="team-card">
         <div class="team-avatar">👤</div>
         <h1 class="team-name">ภัทรพงศ์ ดีเลิศ</h1>
-        <h2 class="team-role">รายละเอียดงานที่รับผิดชอบ</h2>
+        <h2 class="team-role">Project Manager & Data Analyst</h2>
         <span class="team-tag">Student ID: 1660903434</span>
     </div>
     <div class="team-card">
         <div class="team-avatar">👤</div>
         <h1 class="team-name">วีรภัทร ศักดิ์เพชร</h1>
-        <h2 class="team-role">Frontend</h2>
+        <h2 class="team-role">Frontend & Data Visualization</h2>
         <span class="team-tag">Student ID: 1660904267</span>
     </div>
 </div>
@@ -249,30 +368,30 @@
 
 {% block extra_js %}
 <script>
-new Chart(document.getElementById('ageChart'), {
-    type: 'bar',
-    data: {
-        labels: [{% for a in age %}'{{ a.age }}'{{ "," if not loop.last }}{% endfor %}],
+    new Chart(document.getElementById('ageChart'), {
+        type: 'bar',
+        data: {
+            labels: [{% for a in age %}'{{ a.age }}'{{ "," if not loop.last }}{% endfor %}],
         datasets: [{
             data: [{% for a in age %}{{ a.c }}{{ "," if not loop.last }}{% endfor %}],
-            backgroundColor: ['#C4956A','#A0785A','#6B9E5B','#D4A46A','#C88C64'],
-            borderRadius: 8, borderSkipped: false
+        backgroundColor: ['#C4956A', '#A0785A', '#6B9E5B', '#D4A46A', '#C88C64'],
+        borderRadius: 8, borderSkipped: false
         }]
     },
-    options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
+        options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
 });
 
-new Chart(document.getElementById('genderChart'), {
-    type: 'doughnut',
-    data: {
-        labels: [{% for g in gender %}'{{ g.gender }}'{{ "," if not loop.last }}{% endfor %}],
+    new Chart(document.getElementById('genderChart'), {
+        type: 'doughnut',
+        data: {
+            labels: [{% for g in gender %}'{{ g.gender }}'{{ "," if not loop.last }}{% endfor %}],
         datasets: [{
             data: [{% for g in gender %}{{ g.c }}{{ "," if not loop.last }}{% endfor %}],
-            backgroundColor: ['#C88CA0','#A0785A','#81AA77'],
-            borderWidth: 0
+        backgroundColor: ['#C88CA0', '#A0785A', '#81AA77'],
+        borderWidth: 0
         }]
     },
-    options: { plugins: { legend: { position: 'bottom' } } }
+        options: { plugins: { legend: { position: 'bottom' } } }
 });
 </script>
 {% endblock %}
